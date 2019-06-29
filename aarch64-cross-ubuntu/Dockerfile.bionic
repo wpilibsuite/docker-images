@@ -1,0 +1,6 @@
+FROM wpilib/ubuntu-base:18.04
+
+# Install toolchain
+RUN curl -SL https://github.com/wpilibsuite/aarch64-bionic-toolchain/releases/download/v1.0.0/Bionic-Linux-Toolchain-7.4.0.tar.gz | sh -c 'mkdir -p /usr/local && cd /usr/local && tar xzf - --strip-components=1'
+
+WORKDIR /
