@@ -26,3 +26,8 @@ aarch64-cross-ubuntu
  - Cross-compiler for aarch64 (TX2 and Nano)
  - Published as wpilib/aarch-cross-ubuntu:target version-host ubuntu version
    (e.g. bionic-18.04)
+
+gazebo-ubuntu
+ - Based on wpilib/ubuntu-base
+ - Installs gazebo and protobuf required to build gazebo plugins
+ - Published as wpilib/gazebo-ubuntu:host ubuntu version (e.g. 18.04)
