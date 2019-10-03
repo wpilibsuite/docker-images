@@ -14,9 +14,16 @@ RUN apt-get update && apt-get install -y tzdata && apt-get install -y \
     java-common \
     libc6-dev \
     libisl15 \
-    openjdk-11-jdk \
-    make \
     libopencv-dev \
+    libvulkan-dev \
+    libx11-dev \
+    libxcursor-dev \
+    libxi-dev \
+    libxinerama-dev \
+    libxrandr-dev \
+    make \
+    mesa-common-dev \
+    openjdk-11-jdk \
     python-all-dev \
     python3-dev \
     python3-pip \
