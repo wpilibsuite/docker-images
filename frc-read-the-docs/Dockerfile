@@ -11,15 +11,15 @@ RUN git clone --recurse-submodules --depth=1 https://github.com/daltz333/readthe
 
 WORKDIR readthedocs.org
 
-RUN python3.7 -m pip install -r requirements.txt
+RUN python3 -m pip install -r requirements.txt
 
-RUN python3.7 manage.py migrate
+RUN python3 manage.py migrate
 
-RUN python3.7 manage.py createsuperuser --username wpiadmin --email noemail@example.com --noinput
+RUN python3 manage.py createsuperuser --username wpiadmin --email noemail@example.com --noinput
 
-RUN python3.7 manage.py collectstatic
+RUN python3 manage.py collectstatic
 
-RUN python3.7 manage.py loaddata test_data
+RUN python3 manage.py loaddata test_data
 
 EXPOSE 8000
 
