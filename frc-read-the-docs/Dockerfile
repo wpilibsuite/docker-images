@@ -7,7 +7,7 @@ RUN apt-get update && apt-get install -y build-essential redis-server \
     libxml2-dev libxslt1-dev zlib1g-dev \
     git
 
-RUN apt-get install python-pip
+RUN apt-get install -y python-pip
 
 ENV DOCKER_ENABLE True
 
