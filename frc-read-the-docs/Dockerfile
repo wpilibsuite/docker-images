@@ -15,6 +15,10 @@ WORKDIR readthedocs.org
 
 RUN python3 -m pip install -r requirements.txt
 
+RUN python3.7 -m pip install virtualenv==16.7.9
+
+RUN python -m pip install virtualenv
+
 RUN python3 manage.py migrate
 
 RUN python3 manage.py createsuperuser --username wpiadmin --email noemail@example.com --noinput
