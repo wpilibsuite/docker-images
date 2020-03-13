@@ -13,6 +13,8 @@ RUN git clone --recurse-submodules --depth=1 https://github.com/daltz333/readthe
 
 WORKDIR readthedocs.org
 
+RUN python3.7 -m pip install -r requirements.txt
+
 RUN python3.7 -m pip install virtualenv==16.7.9
 
 RUN python3.7 manage.py migrate
