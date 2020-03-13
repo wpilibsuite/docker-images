@@ -25,4 +25,4 @@ RUN python3 manage.py loaddata test_data
 
 EXPOSE 8000
 
-CMD ["python3.7", "manage.py", "runserver", "0.0.0.0:8000"]
+CMD ["python3", "manage.py", "runserver", "0.0.0.0:8000"]
