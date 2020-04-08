@@ -3,7 +3,6 @@ FROM ubuntu:18.04
 RUN apt-get update && apt-get install -y tzdata && apt-get install -y \
     build-essential \
     ca-certificates \
-    clang-format-6.0 \
     cmake \
     curl \
     fakeroot \
@@ -32,6 +31,8 @@ RUN apt-get update && apt-get install -y tzdata && apt-get install -y \
     unzip \
     wget \
     zip \
+  && wget https://apt.llvm.org/llvm.sh && chmod +x llvm.sh && ./llvm.sh 10 \
+  && apt-get install -y clang-format-10
   && rm -rf /var/lib/apt/lists/*
 
 ENV JAVA_HOME /usr/lib/jvm/java-11-openjdk-amd64
