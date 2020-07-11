@@ -1,6 +1,13 @@
 FROM ubuntu:18.04
 
-RUN apt-get update && apt-get install -y tzdata && apt-get install -y \
+RUN apt-get update && apt-get install -y apt-transport-https \
+    ca-certificates \
+    gnupg \
+    software-properties-common \
+    wget && \
+    wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - | tee /etc/apt/trusted.gpg.d/kitware.gpg >/dev/null && \
+    apt-add-repository 'deb https://apt.kitware.com/ubuntu/ bionic main' && \
+    apt-get update && apt-get install -y tzdata && apt-get install -y \
     build-essential \
     ca-certificates \
     clang-format-6.0 \
