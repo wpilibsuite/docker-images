@@ -7,6 +7,7 @@ RUN apt-get update && apt-get install -y apt-transport-https \
     wget && \
     wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - | tee /etc/apt/trusted.gpg.d/kitware.gpg >/dev/null && \
     apt-add-repository 'deb https://apt.kitware.com/ubuntu/ bionic main' && \
+    add-apt-repository ppa:git-core/ppa && \
     apt-get update && apt-get install -y tzdata && apt-get install -y \
     build-essential \
     ca-certificates \
