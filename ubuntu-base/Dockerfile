@@ -21,6 +21,8 @@ RUN apt-get update && apt-get install -y apt-transport-https \
     git \
     java-common \
     libc6-dev \
+    libgl1-mesa-dev \
+    libglu1-mesa-dev \
     libisl15 \
     libopencv-dev \
     libvulkan-dev \
