@@ -1,22 +1,31 @@
 UBUNTU=18.04
+TARGETS=ubuntu-base roborio-cross-ubuntu raspbian-cross-ubuntu aarch64-cross-ubuntu gazebo-ubuntu
+
+.PHONY: usage build update push ${TARGETS}
 
 usage:
 	@echo "Run make update, make build, and make push"
 
 update:
 	docker pull ubuntu:${UBUNTU}
+build: ${TARGETS}
 
-build:
-	cd ubuntu-base && docker build -t wpilib/ubuntu-base:${UBUNTU} .
-	cd roborio-cross-ubuntu && \
-	    docker build -t wpilib/roborio-cross-ubuntu:2020-${UBUNTU} -f Dockerfile.2020 . && \
-	    docker build -t wpilib/roborio-cross-ubuntu:2021-${UBUNTU} -f Dockerfile.2021 .
-	cd raspbian-cross-ubuntu && \
-	    docker build -t wpilib/raspbian-cross-ubuntu:9-${UBUNTU} -f Dockerfile.9 . && \
-	    docker build -t wpilib/raspbian-cross-ubuntu:10-${UBUNTU} -f Dockerfile.10 .
-	cd aarch64-cross-ubuntu && \
-	    docker build -t wpilib/aarch64-cross-ubuntu:bionic-${UBUNTU} -f Dockerfile.bionic .
-	cd gazebo-ubuntu && docker build -t wpilib/gazebo-ubuntu:${UBUNTU} .
+ubuntu-base:
+	cd $@ && docker build -t wpilib/$@:${UBUNTU} .
+
+roborio-cross-ubuntu: ubuntu-base
+	cd $@ && docker build -t wpilib/$@:2020-${UBUNTU} -f Dockerfile.2020 .
+	cd $@ && docker build -t wpilib/$@:2021-${UBUNTU} -f Dockerfile.2021 .
+
+raspbian-cross-ubuntu: ubuntu-base
+	cd $@ && docker build -t wpilib/$@:2020-${UBUNTU} -f Dockerfile.9 .
+	cd $@ && docker build -t wpilib/$@:2021-${UBUNTU} -f Dockerfile.10 .
+
+aarch64-cross-ubuntu: ubuntu-base
+	cd $@ && docker build -t wpilib/$@:bionic-${UBUNTU} -f Dockerfile.bionic .
+
+gazebo-ubuntu:
+	cd $@ && docker build -t wpilib/$@:${UBUNTU} .
 
 push:
 	docker push wpilib/ubuntu-base:${UBUNTU}
