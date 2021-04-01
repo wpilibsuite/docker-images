@@ -24,7 +24,7 @@ raspbian-cross-ubuntu: ubuntu-base
 aarch64-cross-ubuntu: ubuntu-base
 	cd $@ && docker build -t wpilib/$@:bionic-${UBUNTU} -f Dockerfile.bionic .
 
-gazebo-ubuntu:
+gazebo-ubuntu: ubuntu-base
 	cd $@ && docker build -t wpilib/$@:${UBUNTU} .
 
 push:
