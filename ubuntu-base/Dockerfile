@@ -15,8 +15,8 @@ RUN apt-get update && apt-get install -y apt-transport-https \
     cmake \
     curl \
     fakeroot \
-    g++ --no-install-recommends \
-    gcc \
+    g++-8 --no-install-recommends \
+    gcc-8 \
     gdb \
     git \
     java-common \
@@ -43,6 +43,8 @@ RUN apt-get update && apt-get install -y apt-transport-https \
     wget \
     zip \
   && rm -rf /var/lib/apt/lists/*
+
+RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-8 800 --slave /usr/bin/g++ g++ /usr/bin/g++-8
 
 ENV JAVA_HOME /usr/lib/jvm/java-11-openjdk-amd64
 
