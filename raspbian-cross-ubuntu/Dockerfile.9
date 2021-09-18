@@ -1,4 +1,5 @@
-FROM wpilib/ubuntu-base:18.04
+ARG UBUNTU=18.04
+FROM wpilib/ubuntu-base:${UBUNTU}
 
 # Install toolchain
 RUN curl -SL https://github.com/wpilibsuite/raspbian-toolchain/releases/download/v1.3.0/Raspbian9-Linux-Toolchain-6.3.0.tar.gz | sh -c 'mkdir -p /usr/local && cd /usr/local && tar xzf - --strip-components=1'

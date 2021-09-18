@@ -1,4 +1,5 @@
-FROM wpilib/ubuntu-base:18.04
+ARG UBUNTU=18.04
+FROM wpilib/ubuntu-base:${UBUNTU}
 
 RUN apt-get update && apt-get install -y tzdata && apt-get install -y \
     gazebo9 \
