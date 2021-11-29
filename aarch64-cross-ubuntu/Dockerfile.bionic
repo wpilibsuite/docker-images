@@ -2,6 +2,6 @@ ARG UBUNTU=18.04
 FROM wpilib/ubuntu-base:${UBUNTU}
 
 # Install toolchain
-RUN curl -SL https://github.com/wpilibsuite/aarch64-bionic-toolchain/releases/download/v1.1.1/Bionic-Linux-Toolchain-8.3.0.tar.gz | sh -c 'mkdir -p /usr/local && cd /usr/local && tar xzf - --strip-components=1'
+RUN curl -SL https://github.com/wpilibsuite/aarch64-bionic-toolchain/releases/download/v2.1.0/Bionic-Linux-Toolchain-8.4.0.tar.gz | sh -c 'mkdir -p /usr/local && cd /usr/local && tar xzf - --strip-components=1'
 
 WORKDIR /
