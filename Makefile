@@ -1,4 +1,4 @@
-UBUNTU?=18.04
+UBUNTU?=20.04
 
 usage:
 	@echo "Run make update, make build, and make push"

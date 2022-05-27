@@ -1,4 +1,4 @@
-ARG UBUNTU=18.04
+ARG UBUNTU=20.04
 FROM wpilib/ubuntu-base:${UBUNTU}
 
 # Install toolchain

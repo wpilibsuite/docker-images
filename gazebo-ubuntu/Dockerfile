@@ -1,4 +1,4 @@
-ARG UBUNTU=18.04
+ARG UBUNTU=20.04
 FROM wpilib/ubuntu-base:${UBUNTU}
 
 RUN apt-get update && apt-get install -y tzdata && apt-get install -y \
