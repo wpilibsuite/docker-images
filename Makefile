@@ -9,8 +9,6 @@ update:
 build:
 	cd ubuntu-base && docker build -t wpilib/ubuntu-base:${UBUNTU} -f Dockerfile.${UBUNTU} .
 	cd roborio-cross-ubuntu && \
-	    docker build -t wpilib/roborio-cross-ubuntu:2020-${UBUNTU} -f Dockerfile.2020 --build-arg UBUNTU=${UBUNTU} . && \
-	    docker build -t wpilib/roborio-cross-ubuntu:2021-${UBUNTU} -f Dockerfile.2021 --build-arg UBUNTU=${UBUNTU} . && \
 	    docker build -t wpilib/roborio-cross-ubuntu:2022-${UBUNTU} -f Dockerfile.2022 --build-arg UBUNTU=${UBUNTU} .
 	cd raspbian-cross-ubuntu && \
 	    docker build -t wpilib/raspbian-cross-ubuntu:9-${UBUNTU} -f Dockerfile.9 --build-arg UBUNTU=${UBUNTU} . && \
@@ -21,8 +19,6 @@ build:
 
 push:
 	docker push wpilib/ubuntu-base:${UBUNTU}
-	docker push wpilib/roborio-cross-ubuntu:2020-${UBUNTU}
-	docker push wpilib/roborio-cross-ubuntu:2021-${UBUNTU}
 	docker push wpilib/roborio-cross-ubuntu:2022-${UBUNTU}
 	docker push wpilib/raspbian-cross-ubuntu:9-${UBUNTU}
 	docker push wpilib/raspbian-cross-ubuntu:10-${UBUNTU}
