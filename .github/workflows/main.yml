@@ -3,17 +3,6 @@ name: CI
 on: [push, pull_request, workflow_dispatch]
 
 jobs:
-  build18:
-    name: Build-18.04
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - run: make UBUNTU=18.04 update
-      - run: make UBUNTU=18.04 build
-      - run: |
-          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-          make UBUNTU=18.04 push
-        if: ${{ github.repository_owner == 'wpilibsuite' && github.ref == 'refs/heads/main' }} 
   build20:
     name: Build-20.04
     runs-on: ubuntu-latest
