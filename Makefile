@@ -23,5 +23,5 @@ push:
 	docker push wpilib/roborio-cross-ubuntu:2022-${UBUNTU}
 	docker push wpilib/raspbian-cross-ubuntu:10-${UBUNTU}
 	docker push wpilib/aarch64-cross-ubuntu:bionic-${UBUNTU}
-	docker push wpilib/cross-ubuntu:${UBUNTU}
+	docker push wpilib/opensdk-ubuntu:${UBUNTU}
 	docker push wpilib/gazebo-ubuntu:${UBUNTU}
