@@ -10,7 +10,18 @@ jobs:
       - uses: actions/checkout@v2
       - run: make UBUNTU=20.04 update
       - run: make UBUNTU=20.04 build
-      - run: |
-          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-          make UBUNTU=20.04 push
+      - name: Login to Dockerhub
+        uses: docker/login-action@v2
+        if: ${{ github.repository_owner == 'wpilibsuite' && github.ref == 'refs/heads/main' }} 
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v2
+        if: ${{ github.repository_owner == 'wpilibsuite' && github.ref == 'refs/heads/main' }} 
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - run: make UBUNTU=20.04 push
         if: ${{ github.repository_owner == 'wpilibsuite' && github.ref == 'refs/heads/main' }} 
