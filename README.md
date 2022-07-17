@@ -3,31 +3,11 @@ Docker images for building WPILib
 
 These are the dockerfiles for the wpilib dockerhub repositories.
 
-ubuntu-base
- - Based on official ubuntu repo (host)
- - Contains Java and C++ native tools required for WPILib development
- - Base image for cross-compiler images
- - Published as wpilib/ubuntu-base:host ubuntu version (e.g. 18.04)
-
-roborio-cross-ubuntu
- - Based on wpilib/ubuntu-base
- - Cross-compiler for roboRIO
- - Published as wpilib/roborio-cross-ubuntu:frc season-host ubuntu version
-   (e.g. 2020-18.04)
-
-raspbian-cross-ubuntu
- - Based on wpilib/ubuntu-base
- - Cross-compiler for Raspbian
- - Published as wpilib/raspbian-cross-ubuntu:target version-host ubuntu version
-   (e.g. 10-18.04)
-
-aarch64-cross-ubuntu
- - Based on wpilib/ubuntu-base
- - Cross-compiler for aarch64 (TX2 and Nano)
- - Published as wpilib/aarch-cross-ubuntu:target version-host ubuntu version
-   (e.g. bionic-18.04)
-
-gazebo-ubuntu
- - Based on wpilib/ubuntu-base
- - Installs gazebo and protobuf required to build gazebo plugins
- - Published as wpilib/gazebo-ubuntu:host ubuntu version (e.g. 18.04)
+| Container Name | Container Base | Notes |
+|-|-|-|
+| `ubuntu-base` | Minimal Ubuntu 20.04 | A generic container all other containers are built on. Includes Java and C++ native tools. |
+| `aarch64-cross-ubuntu` | `wpilib/ubuntu-base` | Cross-compiler environment for the Nvidia Jetson (Ubuntu 18.04 arm64). |
+| `roborio-cross-ubuntu` | `wpilib/ubuntu-base` | Cross-compiler environment for the National Instruments RoboRIO. |
+| `raspbian-cross-ubuntu` | `wpilib/ubuntu-base` | Cross-compiler environment for the Raspberry Pi (armhf). |
+| `gazebo-ubuntu` | `wpilib/ubuntu-base` | Packages gazebo and protobuf for building plugins. |
+| `opensdk-ubuntu` | `wpilib/ubuntu-base` | Packages for building toolchains in OpenSDK. |
