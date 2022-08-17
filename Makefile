@@ -7,7 +7,7 @@ update:
 	docker pull ubuntu:${UBUNTU}
 
 build:
-	cd ubuntu-base && docker build -t wpilib/ubuntu-base:${UBUNTU} -f Dockerfile.${UBUNTU} .
+	cd base-ubuntu && docker build -t wpilib/ubuntu-base:${UBUNTU} -f Dockerfile.${UBUNTU} .
 	cd roborio-cross-ubuntu && \
 	    docker build -t wpilib/roborio-cross-ubuntu:2022-${UBUNTU} -f Dockerfile.2022 --build-arg UBUNTU=${UBUNTU} .
 	cd raspbian-cross-ubuntu && \
