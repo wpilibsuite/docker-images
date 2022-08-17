@@ -3,6 +3,11 @@ Docker images for building WPILib
 
 These are the dockerfiles for the wpilib dockerhub repositories.
 
+debian-base
+ - Based on official ubuntu repo (host)
+ - Contains Java and C++ native tools required for WPILib development
+ - Published as wpilib/debian-base:host debian version (e.g. bullseye)
+
 ubuntu-base
  - Based on official ubuntu repo (host)
  - Contains Java and C++ native tools required for WPILib development
@@ -31,3 +36,13 @@ gazebo-ubuntu
  - Based on wpilib/ubuntu-base
  - Installs gazebo and protobuf required to build gazebo plugins
  - Published as wpilib/gazebo-ubuntu:host ubuntu version (e.g. 18.04)
+
+opensdk-debian
+ - Based on wpilib/debian-base
+ - Installs tools needed to for OpenSDK
+ - Published as wpilib/opensdk-debian:host debian version (e.g. bullseye)
+
+opensdk-ubuntu
+ - Based on wpilib/ubuntu-base
+ - Installs tools needed to for OpenSDK
+ - Published as wpilib/opensdk-ubuntu:host ubuntu version (e.g. 18.04)

@@ -1,0 +1,25 @@
+ARG DEBIAN
+FROM wpilib/debian-base:${DEBIAN}
+
+RUN apt-get update && \
+  apt-get install -y \
+    bison \
+    build-essential \
+    crossbuild-essential-arm64 \
+    crossbuild-essential-armhf \
+    crossbuild-essential-i386 \
+    flex \
+    gawk \
+    libgmp-dev \
+    libisl-dev \
+    libmpc-dev \
+    libmpfr-dev \
+    m4 \
+    mingw-w64 \
+    rsync \
+    strip-nondeterminism \
+    sudo \
+    texinfo \
+    wget \
+    zip && \
+  rm -rf /var/lib/apt/lists/*

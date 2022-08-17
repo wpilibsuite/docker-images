@@ -1,16 +1,36 @@
 name: CI
 
-on: [push, pull_request, workflow_dispatch]
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+  schedule:
+    # Every Sunday at 2:00 (UTC?)
+    - cron: '0 2 * * 0'
 
 jobs:
-  build20:
-    name: Build-20.04
+  build:
+    name: Build Images
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+        - name: "debian"
+          env: "DEBIAN=bullseye"
+        - name: "debian"
+          env: "DEBIAN=testing"
+        - name: "ubuntu"
+          env: "UBUNTU=20.04"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: make UBUNTU=20.04 update
-      - run: make UBUNTU=20.04 build
+      - run: make ${{matrix.env}} update-${{matrix.name}}
+      - run: make ${{matrix.env}} build-${{matrix.name}}
+      - uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+        if: github.repository_owner == 'wpilibsuite' && github.ref == 'refs/heads/main' 
       - run: |
-          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-          make UBUNTU=20.04 push
-        if: ${{ github.repository_owner == 'wpilibsuite' && github.ref == 'refs/heads/main' }} 
+          make ${{matrix.env}} push-${{matrix.name}}
+        if: github.repository_owner == 'wpilibsuite' && github.ref == 'refs/heads/main' 
