@@ -1,4 +1,4 @@
-ARG UBUNTU=20.04
+ARG UBUNTU=22.04
 FROM wpilib/ubuntu-base:${UBUNTU}
 
 RUN apt-get update && \
@@ -22,5 +22,4 @@ RUN apt-get update && \
     texinfo \
     wget \
     zip && \
-  rm -rf /var/lib/apt/lists/* && \
-  update-alternatives --set gcc /usr/bin/gcc-9
+  rm -rf /var/lib/apt/lists/*
