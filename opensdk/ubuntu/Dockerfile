@@ -9,8 +9,6 @@ RUN apt-get update && \
     apt-get install -y \
     bison \
     crossbuild-essential-amd64 \
-    crossbuild-essential-arm64 \
-    crossbuild-essential-armhf \
     crossbuild-essential-riscv64 \
     flex \
     gawk \
