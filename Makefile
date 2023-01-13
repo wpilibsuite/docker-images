@@ -45,4 +45,4 @@ push/cross: push/base
 	docker push ${DOCKER_USER}/aarch64-cross-ubuntu:bullseye-${UBUNTU}
 
 push/opensdk:
-	docker push ${USER}/opensdk-ubuntu:${OPENSDK_UBUNTU}
+	docker push ${DOCKER_USER}/opensdk-ubuntu:${OPENSDK_UBUNTU}
