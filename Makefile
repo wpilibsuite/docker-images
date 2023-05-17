@@ -33,7 +33,7 @@ build/opensdk:
 	cd opensdk/ubuntu && \
 		docker build -t ${DOCKER_USER}/opensdk-ubuntu:${OPENSDK_UBUNTU} --build-arg OPENSDK_UBUNTU=${OPENSDK_UBUNTU} .
 
-push: $(patsubst %,push/%, base cross opensdl)
+push: $(patsubst %,push/%, base cross opensdk)
 
 push/base:
 	docker push ${DOCKER_USER}/ubuntu-base:${UBUNTU}
