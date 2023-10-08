@@ -23,7 +23,7 @@ build/base:
 
 build/cross: build/base
 	cd roborio-cross-ubuntu && \
-	    docker build -t ${DOCKER_USER}/roborio-cross-ubuntu:2023-${UBUNTU} -f Dockerfile.2023 --build-arg UBUNTU=${UBUNTU} .
+	    docker build -t ${DOCKER_USER}/roborio-cross-ubuntu:2024-${UBUNTU} -f Dockerfile.2024 --build-arg UBUNTU=${UBUNTU} .
 	cd raspbian-cross-ubuntu && \
 	    docker build -t ${DOCKER_USER}/raspbian-cross-ubuntu:bullseye-${UBUNTU} -f Dockerfile.bullseye --build-arg UBUNTU=${UBUNTU} .
 	cd aarch64-cross-ubuntu && \
@@ -40,7 +40,7 @@ push/base:
 	docker push ${DOCKER_USER}/gazebo-ubuntu:${UBUNTU}
 
 push/cross: push/base
-	docker push ${DOCKER_USER}/roborio-cross-ubuntu:2023-${UBUNTU}
+	docker push ${DOCKER_USER}/roborio-cross-ubuntu:2024-${UBUNTU}
 	docker push ${DOCKER_USER}/raspbian-cross-ubuntu:bullseye-${UBUNTU}
 	docker push ${DOCKER_USER}/aarch64-cross-ubuntu:bullseye-${UBUNTU}
 
