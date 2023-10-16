@@ -4,8 +4,8 @@ OPENSDK_UBUNTU?=20.04
 DOCKER_USER?=wpilib
 
 .PHONY: usage update push build \
-	$(patsubst %,build/%, base cross opensdl)
-	$(patsubst %,push/%, base cross opensdl)
+	$(patsubst %,build/%, base cross opensdk)
+	$(patsubst %,push/%, base cross opensdk)
 usage:
 	@echo "Run make update, make build, and make push"
 
