@@ -66,3 +66,5 @@ push/minimal-cross: push/minimal-base
 
 push/opensdk:
 	docker push ${DOCKER_USER}/opensdk-ubuntu:${OPENSDK_UBUNTU}
+
+include cross-ubuntu-py/py.mk

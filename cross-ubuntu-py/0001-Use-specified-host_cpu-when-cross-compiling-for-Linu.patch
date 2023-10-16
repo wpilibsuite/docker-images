@@ -1,0 +1,53 @@
+From 1325a6365032f2c7dea4f823003f46305724a6a6 Mon Sep 17 00:00:00 2001
+From: Dustin Spicuzza <dustin@virtualroadside.com>
+Date: Sat, 1 Jan 2022 22:44:03 -0500
+Subject: [PATCH] Use specified $host_cpu when cross compiling for Linux
+
+Previously arm processors were hardcoded to "arm", which doesn't match
+the output of uname -m (used for native compilation)
+---
+ configure    | 8 +-------
+ configure.ac | 8 +-------
+ 2 files changed, 2 insertions(+), 14 deletions(-)
+
+diff --git a/configure b/configure
+index 2e7e0b7e0a..d91928fb79 100755
+--- a/configure
++++ b/configure
+@@ -3383,13 +3383,7 @@ $as_echo "\"$MACHDEP\"" >&6; }
+ if test "$cross_compiling" = yes; then
+ 	case "$host" in
+ 	*-*-linux*)
+-		case "$host_cpu" in
+-		arm*)
+-			_host_cpu=arm
+-			;;
+-		*)
+-			_host_cpu=$host_cpu
+-		esac
++		_host_cpu=$host_cpu
+ 		;;
+ 	*-*-cygwin*)
+ 		_host_cpu=
+diff --git a/configure.ac b/configure.ac
+index 0c06914147..897c3a00ef 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -438,13 +438,7 @@ AC_SUBST(_PYTHON_HOST_PLATFORM)
+ if test "$cross_compiling" = yes; then
+ 	case "$host" in
+ 	*-*-linux*)
+-		case "$host_cpu" in
+-		arm*)
+-			_host_cpu=arm
+-			;;
+-		*)
+-			_host_cpu=$host_cpu
+-		esac
++		_host_cpu=$host_cpu
+ 		;;
+ 	*-*-cygwin*)
+ 		_host_cpu=
+-- 
+2.31.1
+
