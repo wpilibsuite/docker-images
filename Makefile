@@ -67,4 +67,11 @@ push/minimal-cross: push/minimal-base
 push/opensdk:
 	docker push ${DOCKER_USER}/opensdk-ubuntu:${OPENSDK_UBUNTU}
 
+
+.PHONY: save/minimal-cross
+save/minimal-cross:
+	docker save ${DOCKER_USER}/roborio-cross-ubuntu-minimal:2024-${UBUNTU} | gzip > roborio.tar.gz
+	docker save ${DOCKER_USER}/raspbian-cross-ubuntu-minimal:bullseye-${UBUNTU} | gzip > raspbian.tar.gz
+	docker save ${DOCKER_USER}/aarch64-cross-ubuntu-minimal:bullseye-${UBUNTU} | gzip > aarch64.tar.gz
+
 include cross-ubuntu-py/py.mk

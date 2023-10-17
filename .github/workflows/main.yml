@@ -2,6 +2,10 @@ name: CI
 
 on: [push, pull_request, workflow_dispatch]
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build:
     name: Build
@@ -14,3 +18,74 @@ jobs:
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
           make push
         if: ${{ github.repository_owner == 'wpilibsuite' && github.ref == 'refs/heads/main' }} 
+
+  build-minimal:
+    name: Build Minimal
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: make update
+      - run: make build/minimal-cross
+      - run: |
+          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+          make push/minimal-cross
+        if: ${{ github.repository_owner == 'wpilibsuite' && github.ref == 'refs/heads/main' }}
+
+      - run: make save/minimal-cross
+      - uses: actions/upload-artifact@v3
+        with:
+          name: roborio
+          path: roborio.tar.gz
+          retention-days: 1
+      - uses: actions/upload-artifact@v3
+        with:
+          name: raspbian
+          path: raspbian.tar.gz
+          retention-days: 1
+      - uses: actions/upload-artifact@v3
+        with:
+          name: aarch64
+          path: aarch64.tar.gz
+          retention-days: 1
+
+  build-python:
+    name: Build Python Images
+    needs: [build-minimal]
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        type:
+        - raspbian
+        - aarch64
+        pyversion:
+        - py38
+        - py39
+        - py310
+        - py311
+        - py312
+        include:
+        - type: roborio
+          pyversion: py312
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Download image
+      uses: actions/download-artifact@v3
+      with:
+        name: ${{ matrix.type }}
+        path: img
+
+    - name: Load image
+      run: |
+        gunzip -c img/${{ matrix.type }}.tar.gz | docker load
+        rm img/${{ matrix.type }}.tar.gz
+
+    - name: Build image
+      run: make build/cross-${{ matrix.type }}-${{ matrix.pyversion }}
+
+    - name: Upload image
+      run: |
+          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+          make push/cross-${{ matrix.type }}-${{ matrix.pyversion }}
+      if: ${{ github.repository_owner == 'wpilibsuite' && github.ref == 'refs/heads/main' }}

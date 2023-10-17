@@ -17,11 +17,6 @@ VERSION_ROBORIO=2024
 TARGET_HOST_ROBORIO=arm-frc2024-linux-gnueabi
 AC_TARGET_HOST_ROBORIO=armv7l-frc2024-linux-gnueabi
 
-.PHONY: save-minimal-images
-save-minimal-images:
-	docker save ${DOCKER_USER}/roborio-cross-ubuntu-minimal:2024-${UBUNTU} | gzip > roborio.tar.gz
-	docker save ${DOCKER_USER}/raspbian-cross-ubuntu-minimal:bullseye-${UBUNTU} | gzip > raspbian.tar.gz
-	docker save ${DOCKER_USER}/aarch64-cross-ubuntu-minimal:bullseye-${UBUNTU} | gzip > aarch64.tar.gz
 
 .PHONY: build/cross-python
 build/cross-python: build/cross-raspbian-py38 build/cross-aarch64-py38 build/cross-raspbian-py39 build/cross-aarch64-py39 build/cross-raspbian-py310 build/cross-aarch64-py310 build/cross-raspbian-py311 build/cross-aarch64-py311 build/cross-roborio-py312 build/cross-raspbian-py312 build/cross-aarch64-py312
