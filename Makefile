@@ -4,8 +4,8 @@ OPENSDK_UBUNTU?=20.04
 DOCKER_USER?=wpilib
 
 .PHONY: usage update push build \
-	$(patsubst %,build/%, base cross opensdl)
-	$(patsubst %,push/%, base cross opensdl)
+	$(patsubst %,build/%, base cross minimal-base minimal-cross opensdk)
+	$(patsubst %,push/%, base cross minimal-base minimal-cross opensdk)
 usage:
 	@echo "Run make update, make build, and make push"
 
@@ -23,12 +23,24 @@ build/base:
 
 build/cross: build/base
 	cd roborio-cross-ubuntu && \
-	    docker build -t ${DOCKER_USER}/roborio-cross-ubuntu:2024-${UBUNTU} -f Dockerfile.2024 --build-arg UBUNTU=${UBUNTU} .
+	    docker build -t ${DOCKER_USER}/roborio-cross-ubuntu:2024-${UBUNTU} -f Dockerfile.2024 --build-arg UBUNTU=${UBUNTU} --build-arg TYPE=base .
 	cd raspbian-cross-ubuntu && \
-	    docker build -t ${DOCKER_USER}/raspbian-cross-ubuntu:bullseye-${UBUNTU} -f Dockerfile.bullseye --build-arg UBUNTU=${UBUNTU} .
+	    docker build -t ${DOCKER_USER}/raspbian-cross-ubuntu:bullseye-${UBUNTU} -f Dockerfile.bullseye --build-arg UBUNTU=${UBUNTU} --build-arg TYPE=base .
 	cd aarch64-cross-ubuntu && \
-	    docker build -t ${DOCKER_USER}/aarch64-cross-ubuntu:bullseye-${UBUNTU} -f Dockerfile.bullseye --build-arg UBUNTU=${UBUNTU} .
-	
+	    docker build -t ${DOCKER_USER}/aarch64-cross-ubuntu:bullseye-${UBUNTU} -f Dockerfile.bullseye --build-arg UBUNTU=${UBUNTU} --build-arg TYPE=base .
+
+build/minimal-base:
+	cd ubuntu-minimal-base && \
+		docker build -t ${DOCKER_USER}/ubuntu-minimal-base:${UBUNTU} -f Dockerfile.${UBUNTU} .
+
+build/minimal-cross: build/minimal-base
+	cd roborio-cross-ubuntu && \
+	    docker build -t ${DOCKER_USER}/roborio-cross-ubuntu-minimal:2024-${UBUNTU} -f Dockerfile.2024 --build-arg UBUNTU=${UBUNTU} --build-arg TYPE=minimal-base .
+	cd raspbian-cross-ubuntu && \
+	    docker build -t ${DOCKER_USER}/raspbian-cross-ubuntu-minimal:bullseye-${UBUNTU} -f Dockerfile.bullseye --build-arg UBUNTU=${UBUNTU} --build-arg TYPE=minimal-base .
+	cd aarch64-cross-ubuntu && \
+	    docker build -t ${DOCKER_USER}/aarch64-cross-ubuntu-minimal:bullseye-${UBUNTU} -f Dockerfile.bullseye --build-arg UBUNTU=${UBUNTU} --build-arg TYPE=minimal-base .
+
 build/opensdk:
 	cd opensdk/ubuntu && \
 		docker build -t ${DOCKER_USER}/opensdk-ubuntu:${OPENSDK_UBUNTU} --build-arg OPENSDK_UBUNTU=${OPENSDK_UBUNTU} .
@@ -44,5 +56,22 @@ push/cross: push/base
 	docker push ${DOCKER_USER}/raspbian-cross-ubuntu:bullseye-${UBUNTU}
 	docker push ${DOCKER_USER}/aarch64-cross-ubuntu:bullseye-${UBUNTU}
 
+push/minimal-base:
+	docker push ${DOCKER_USER}/ubuntu-minimal-base:${UBUNTU}
+
+push/minimal-cross: push/minimal-base
+	docker push ${DOCKER_USER}/roborio-cross-ubuntu-minimal:2024-${UBUNTU}
+	docker push ${DOCKER_USER}/raspbian-cross-ubuntu-minimal:bullseye-${UBUNTU}
+	docker push ${DOCKER_USER}/aarch64-cross-ubuntu-minimal:bullseye-${UBUNTU}
+
 push/opensdk:
 	docker push ${DOCKER_USER}/opensdk-ubuntu:${OPENSDK_UBUNTU}
+
+
+.PHONY: save/minimal-cross
+save/minimal-cross:
+	docker save ${DOCKER_USER}/roborio-cross-ubuntu-minimal:2024-${UBUNTU} | gzip > roborio.tar.gz
+	docker save ${DOCKER_USER}/raspbian-cross-ubuntu-minimal:bullseye-${UBUNTU} | gzip > raspbian.tar.gz
+	docker save ${DOCKER_USER}/aarch64-cross-ubuntu-minimal:bullseye-${UBUNTU} | gzip > aarch64.tar.gz
+
+include cross-ubuntu-py/py.mk
