@@ -11,7 +11,7 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - run: make update
       - run: make build
       - run: |
@@ -23,7 +23,7 @@ jobs:
     name: Build Minimal
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - run: make update
       - run: make build/minimal-cross
       - run: |
@@ -32,17 +32,17 @@ jobs:
         if: ${{ github.repository_owner == 'wpilibsuite' && github.ref == 'refs/heads/main' }}
 
       - run: make save/minimal-cross
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: roborio
           path: roborio.tar.gz
           retention-days: 1
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: raspbian
           path: raspbian.tar.gz
           retention-days: 1
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: aarch64
           path: aarch64.tar.gz
@@ -68,10 +68,10 @@ jobs:
           pyversion: py312
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Download image
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: ${{ matrix.type }}
         path: img
