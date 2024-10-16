@@ -14,16 +14,17 @@ TARGET_HOST_AARCH64=aarch64-bullseye-linux-gnu
 AC_TARGET_HOST_AARCH64=aarch64-bullseye-linux-gnu
 
 TYPE_ROBORIO=roborio
-VERSION_ROBORIO=$(YEAR)
+VERSION_ROBORIO=2024
 TARGET_HOST_ROBORIO=arm-frc2024-linux-gnueabi
 AC_TARGET_HOST_ROBORIO=armv7l-frc2024-linux-gnueabi
 
 
 .PHONY: build/cross-python
-build/cross-python: build/cross-raspbian-py39 build/cross-aarch64-py39 build/cross-raspbian-py310 build/cross-aarch64-py310 build/cross-raspbian-py311 build/cross-aarch64-py311 build/cross-roborio-py312 build/cross-raspbian-py312 build/cross-aarch64-py312
+build/cross-python: build/cross-raspbian-py39 build/cross-aarch64-py39 build/cross-raspbian-py310 build/cross-aarch64-py310 build/cross-raspbian-py311 build/cross-aarch64-py311 build/cross-raspbian-py312 build/cross-aarch64-py312 build/cross-roborio-py313 build/cross-raspbian-py313 build/cross-aarch64-py313
+
 
 .PHONY: push/cross-python
-push/cross-python: push/cross-raspbian-py39 push/cross-aarch64-py39 push/cross-raspbian-py310 push/cross-aarch64-py310 push/cross-raspbian-py311 push/cross-aarch64-py311 push/cross-roborio-py312 push/cross-raspbian-py312 push/cross-aarch64-py312
+push/cross-python: push/cross-raspbian-py39 push/cross-aarch64-py39 push/cross-raspbian-py310 push/cross-aarch64-py310 push/cross-raspbian-py311 push/cross-aarch64-py311 push/cross-raspbian-py312 push/cross-aarch64-py312 push/cross-roborio-py313 push/cross-raspbian-py313 push/cross-aarch64-py313
 
 
 #
@@ -187,3 +188,58 @@ build/cross-aarch64-py312:
 .PHONY: push/cross-aarch64-py312
 push/cross-aarch64-py312:
 	docker push wpilib/$(TYPE_AARCH64)-cross-ubuntu:$(YEAR)-$(VERSION_AARCH64)-$(UBUNTU)-py312
+
+
+
+#
+# Python 3.13
+#
+
+.PHONY: build/cross-raspbian-py313
+build/cross-raspbian-py313:
+	cd cross-ubuntu-py && \
+	docker build . \
+		-t wpilib/$(TYPE_RASPBIAN)-cross-ubuntu:$(YEAR)-$(VERSION_RASPBIAN)-$(UBUNTU)-py313 \
+		--build-arg ARCH=$(TYPE_RASPBIAN) \
+		--build-arg TARGET_HOST=$(TARGET_HOST_RASPBIAN) \
+		--build-arg AC_TARGET_HOST=$(AC_TARGET_HOST_RASPBIAN) \
+		--build-arg VERSION=$(VERSION_RASPBIAN) \
+		-f Dockerfile.py313
+
+.PHONY: push/cross-raspbian-py313
+push/cross-raspbian-py313:
+	docker push wpilib/$(TYPE_RASPBIAN)-cross-ubuntu:$(YEAR)-$(VERSION_RASPBIAN)-$(UBUNTU)-py313
+
+
+.PHONY: build/cross-roborio-py313
+build/cross-roborio-py313:
+	cd cross-ubuntu-py && \
+	docker build . \
+		-t wpilib/$(TYPE_ROBORIO)-cross-ubuntu:$(YEAR)-$(UBUNTU)-py313 \
+		--build-arg ARCH=$(TYPE_ROBORIO) \
+		--build-arg TARGET_HOST=$(TARGET_HOST_ROBORIO) \
+		--build-arg AC_TARGET_HOST=$(AC_TARGET_HOST_ROBORIO) \
+		--build-arg VERSION=$(VERSION_ROBORIO) \
+		--build-arg MACHINE_ARG="--machine=roborio" \
+		-f Dockerfile.py313
+
+.PHONY: push/cross-roborio-py313
+push/cross-roborio-py313:
+	docker push wpilib/$(TYPE_ROBORIO)-cross-ubuntu:$(YEAR)-$(UBUNTU)-py313
+
+
+
+.PHONY: build/cross-aarch64-py313
+build/cross-aarch64-py313:
+	cd cross-ubuntu-py && \
+	docker build . \
+		-t wpilib/$(TYPE_AARCH64)-cross-ubuntu:$(VERSION_AARCH64)-$(UBUNTU)-py313 \
+		--build-arg ARCH=$(TYPE_AARCH64) \
+		--build-arg TARGET_HOST=$(TARGET_HOST_AARCH64) \
+		--build-arg AC_TARGET_HOST=$(AC_TARGET_HOST_AARCH64) \
+		--build-arg VERSION=$(VERSION_AARCH64) \
+		-f Dockerfile.py313
+
+.PHONY: push/cross-aarch64-py313
+push/cross-aarch64-py313:
+	docker push wpilib/$(TYPE_AARCH64)-cross-ubuntu:$(VERSION_AARCH64)-$(UBUNTU)-py313
