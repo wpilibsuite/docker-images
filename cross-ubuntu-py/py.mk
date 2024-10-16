@@ -204,6 +204,7 @@ build/cross-raspbian-py313:
 		--build-arg TARGET_HOST=$(TARGET_HOST_RASPBIAN) \
 		--build-arg AC_TARGET_HOST=$(AC_TARGET_HOST_RASPBIAN) \
 		--build-arg VERSION=$(VERSION_RASPBIAN) \
+		--build-arg EXTRA_CROSS_CONFIGURE_ARGS="ac_cv_libatomic_needed=yes" \
 		-f Dockerfile.py313
 
 .PHONY: push/cross-raspbian-py313
