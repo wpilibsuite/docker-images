@@ -7,13 +7,17 @@ FROM wpilib/${ARCH}-cross-ubuntu-minimal:${VERSION}-${UBUNTU} AS pycompile
 
 ARG TARGET_HOST=invalid-target-host
 ARG AC_TARGET_HOST=invalid-ac-target-host
+ARG EXTRA_CROSS_CONFIGURE_ARGS=
 
 ENV TARGET_HOST=${TARGET_HOST}
 ENV AC_TARGET_HOST=${AC_TARGET_HOST}
+ENV EXTRA_CROSS_CONFIGURE_ARGS=${EXTRA_CROSS_CONFIGURE_ARGS}
 ENV BUILD_HOST="x86_64"
 ENV WORKING_DIRECTORY="/build"
 ENV INSTALL_DIRECTORY="/build/crosspy"
-ENV PYTHON_VERSION="3.8.16"
+ENV PYTHON_VERSION="3.13.0"
+ENV PYTHON_FTP_VERSION="3.13.0"
+ENV PYTHON_EXE="python3.13"
 ENV SOURCE_DIRECTORY="Python-$PYTHON_VERSION"
 ENV PYTHON_ARCHIVE="Python-$PYTHON_VERSION.tar.xz"
 ENV PREFIX="$INSTALL_DIRECTORY"
@@ -33,38 +37,45 @@ RUN set -xe; \
 # Python cross-compilation
 #
 
-COPY 0001-bpo-41916-allow-cross-compiled-python-to-have-pthrea.patch /
-COPY 0001-Use-specified-host_cpu-when-cross-compiling-for-Linu.patch /
-
 RUN set -xe; \
     mkdir -p "$PREFIX"; \
     # Download
     cd $WORKING_DIRECTORY; \
-    wget -c https://www.python.org/ftp/python/$PYTHON_VERSION/$PYTHON_ARCHIVE; \
+    wget -c https://www.python.org/ftp/python/$PYTHON_FTP_VERSION/$PYTHON_ARCHIVE; \
     rm -rf $SOURCE_DIRECTORY; \
     tar -xf $PYTHON_ARCHIVE; \
     cd $SOURCE_DIRECTORY; \
-    # patch -pthread CXX issue
-    patch -p1 < /0001-bpo-41916-allow-cross-compiled-python-to-have-pthrea.patch; \
-    # patch arm cpu hardcoding
-    patch -p1 < /0001-Use-specified-host_cpu-when-cross-compiling-for-Linu.patch; \
     # Build python for host
     cd $WORKING_DIRECTORY;cd $SOURCE_DIRECTORY; \
     ./configure --enable-optimizations --with-ensurepip=install; \
-    make -j altinstall; \
+    make -j; \
+    make -j altinstall
+
+RUN set -xe; \
+    # Remove build dependencies -- compilation uses host for some reason
+    apt-get remove -y libreadline-dev libncursesw5-dev libssl-dev \
+        libsqlite3-dev tk-dev libgdbm-dev libc6-dev libbz2-dev liblzma-dev lzma-dev libffi-dev zlib1g-dev; \
+    apt-get autoremove -y;
+
+RUN set -xe; \
     # cross-compile
-    cd $WORKING_DIRECTORY;cd $SOURCE_DIRECTORY; make distclean; \
+    cd $WORKING_DIRECTORY; \
+    rm -rf $SOURCE_DIRECTORY; \
+    tar -xf $PYTHON_ARCHIVE; \
+    cd $SOURCE_DIRECTORY; \
     ./configure --host=$TARGET_HOST --build=$BUILD_HOST --prefix=$PREFIX \
-        --disable-ipv6 --enable-unicode=ucs4 \
+        --with-build-python=$(which $PYTHON_EXE) \
+        --disable-ipv6 \
         ac_cv_host=$AC_TARGET_HOST \
         ac_cv_buggy_getaddrinfo=no \
         ac_cv_file__dev_ptmx=no ac_cv_file__dev_ptc=no \
         ac_cv_have_long_long_format=yes \
-        ac_cv_pthread_is_default=no ac_cv_pthread=yes ac_cv_cxx_thread=yes; \
+        ac_cv_pthread_is_default=no ac_cv_pthread=yes ac_cv_cxx_thread=yes \
+        ${EXTRA_CROSS_CONFIGURE_ARGS}; \
     make -j; \
     # make install here is fine because we include --prefix in the configure statement
     make install
-    
+
 
 #
 # Minimal cross-compilation environment
@@ -84,11 +95,12 @@ COPY --from=pycompile /build/crosspy /build/crosspy
 
 ARG ARCH=invalid-arch
 ARG TARGET_HOST=invalid-target-host
+ARG MACHINE_ARG=
 
 RUN set -xe; \
     ldconfig; \
-    python3.8 -m pip install crossenv==1.4.0; \
-    python3.8 -m crossenv /build/crosspy/bin/python3.8 /build/venv --sysroot=$(${TARGET_HOST}-gcc -print-sysroot) --env UNIXCONFDIR=/build/venv/cross/etc; \
+    python3.13 -m pip install 'crossenv~=1.5.0'; \
+    python3.13 -m crossenv /build/crosspy/bin/python3.13 /build/venv ${MACHINE_ARG} --sysroot=$(${TARGET_HOST}-gcc -print-sysroot) --env UNIXCONFDIR=/build/venv/cross/etc; \
     /build/venv/bin/cross-pip install wheel;
 
 COPY pip-${ARCH}.conf /build/venv/cross/pip.conf

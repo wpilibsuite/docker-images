@@ -58,14 +58,14 @@ jobs:
         - raspbian
         - aarch64
         pyversion:
-        - py38
         - py39
         - py310
         - py311
         - py312
+        - py313
         include:
         - type: roborio
-          pyversion: py312
+          pyversion: py313
 
     steps:
     - uses: actions/checkout@v4
