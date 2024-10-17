@@ -14,9 +14,9 @@ TARGET_HOST_AARCH64=aarch64-bullseye-linux-gnu
 AC_TARGET_HOST_AARCH64=aarch64-bullseye-linux-gnu
 
 TYPE_ROBORIO=roborio
-VERSION_ROBORIO=2024
-TARGET_HOST_ROBORIO=arm-frc2024-linux-gnueabi
-AC_TARGET_HOST_ROBORIO=armv7l-frc2024-linux-gnueabi
+VERSION_ROBORIO=2025
+TARGET_HOST_ROBORIO=arm-frc2025-linux-gnueabi
+AC_TARGET_HOST_ROBORIO=armv7l-frc2025-linux-gnueabi
 
 
 .PHONY: build/cross-python
