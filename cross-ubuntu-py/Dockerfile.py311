@@ -88,11 +88,12 @@ COPY --from=pycompile /build/crosspy /build/crosspy
 
 ARG ARCH=invalid-arch
 ARG TARGET_HOST=invalid-target-host
+ARG EXTRA_CROSSENV_ARGS=
 
 RUN set -xe; \
     ldconfig; \
-    python3.11 -m pip install crossenv==1.4.0; \
-    python3.11 -m crossenv /build/crosspy/bin/python3.11 /build/venv --sysroot=$(${TARGET_HOST}-print-sysroot) --env UNIXCONFDIR=/build/venv/cross/etc; \
+    python3.11 -m pip install crossenv==1.5.0; \
+    python3.11 -m crossenv /build/crosspy/bin/python3.11 /build/venv --sysroot=$(${TARGET_HOST}-print-sysroot) --env UNIXCONFDIR=/build/venv/cross/etc ${EXTRA_CROSSENV_ARGS}; \
     /build/venv/bin/cross-pip install wheel;
 
 COPY pip-${ARCH}.conf /build/venv/cross/pip.conf
