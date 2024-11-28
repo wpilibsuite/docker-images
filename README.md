@@ -21,6 +21,13 @@ roborio-cross-ubuntu
    (e.g. 2020-18.04)
  - Minimal variant published as roborio-cross-ubuntu-minimal
 
+systemcore-cross-ubuntu
+ - Based on wpilib/ubuntu-base
+ - Cross-compiler for systemcore (Bookworm for now)
+ - Published as wpilib/systemcore-cross-ubuntu:frc season-host ubuntu version
+   (e.g. 2020-18.04)
+ - Minimal variant published as systemcore-cross-ubuntu-minimal
+
 raspbian-cross-ubuntu
  - Based on wpilib/ubuntu-base
  - Cross-compiler for Raspbian
