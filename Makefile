@@ -23,7 +23,7 @@ build/base:
 
 build/cross: build/base
 	cd roborio-cross-ubuntu && \
-	    docker build -t ${DOCKER_USER}/roborio-cross-ubuntu:2024-${UBUNTU} -f Dockerfile.2024 --build-arg UBUNTU=${UBUNTU} --build-arg TYPE=base .
+	    docker build -t ${DOCKER_USER}/roborio-cross-ubuntu:2025-${UBUNTU} -f Dockerfile.2025 --build-arg UBUNTU=${UBUNTU} --build-arg TYPE=base .
 	cd systemcore-cross-ubuntu && \
 	    docker build -t ${DOCKER_USER}/systemcore-cross-ubuntu:2025-${UBUNTU} -f Dockerfile.2025 --build-arg UBUNTU=${UBUNTU} --build-arg TYPE=base .
 	cd raspbian-cross-ubuntu && \
@@ -37,7 +37,7 @@ build/minimal-base:
 
 build/minimal-cross: build/minimal-base
 	cd roborio-cross-ubuntu && \
-	    docker build -t ${DOCKER_USER}/roborio-cross-ubuntu-minimal:2024-${UBUNTU} -f Dockerfile.2024 --build-arg UBUNTU=${UBUNTU} --build-arg TYPE=minimal-base .
+	    docker build -t ${DOCKER_USER}/roborio-cross-ubuntu-minimal:2025-${UBUNTU} -f Dockerfile.2025 --build-arg UBUNTU=${UBUNTU} --build-arg TYPE=minimal-base .
 	cd systemcore-cross-ubuntu && \
 	    docker build -t ${DOCKER_USER}/systemcore-cross-ubuntu-minimal:2025-${UBUNTU} -f Dockerfile.2025 --build-arg UBUNTU=${UBUNTU} --build-arg TYPE=minimal-base .
 	cd raspbian-cross-ubuntu && \
@@ -56,7 +56,7 @@ push/base:
 	docker push ${DOCKER_USER}/gazebo-ubuntu:${UBUNTU}
 
 push/cross: push/base
-	docker push ${DOCKER_USER}/roborio-cross-ubuntu:2024-${UBUNTU}
+	docker push ${DOCKER_USER}/roborio-cross-ubuntu:2025-${UBUNTU}
 	docker push ${DOCKER_USER}/systemcore-cross-ubuntu:2025-${UBUNTU}
 	docker push ${DOCKER_USER}/raspbian-cross-ubuntu:bullseye-${UBUNTU}
 	docker push ${DOCKER_USER}/aarch64-cross-ubuntu:bullseye-${UBUNTU}
@@ -65,7 +65,7 @@ push/minimal-base:
 	docker push ${DOCKER_USER}/ubuntu-minimal-base:${UBUNTU}
 
 push/minimal-cross: push/minimal-base
-	docker push ${DOCKER_USER}/roborio-cross-ubuntu-minimal:2024-${UBUNTU}
+	docker push ${DOCKER_USER}/roborio-cross-ubuntu-minimal:2025-${UBUNTU}
 	docker push ${DOCKER_USER}/systemcore-cross-ubuntu-minimal:2025-${UBUNTU}
 	docker push ${DOCKER_USER}/raspbian-cross-ubuntu-minimal:bullseye-${UBUNTU}
 	docker push ${DOCKER_USER}/aarch64-cross-ubuntu-minimal:bullseye-${UBUNTU}
@@ -76,7 +76,7 @@ push/opensdk:
 
 .PHONY: save/minimal-cross
 save/minimal-cross:
-	docker save ${DOCKER_USER}/roborio-cross-ubuntu-minimal:2024-${UBUNTU} | gzip > roborio.tar.gz
+	docker save ${DOCKER_USER}/roborio-cross-ubuntu-minimal:2025-${UBUNTU} | gzip > roborio.tar.gz
 	docker save ${DOCKER_USER}/systemcore-cross-ubuntu-minimal:2025-${UBUNTU} | gzip > systemcore.tar.gz
 	docker save ${DOCKER_USER}/raspbian-cross-ubuntu-minimal:bullseye-${UBUNTU} | gzip > raspbian.tar.gz
 	docker save ${DOCKER_USER}/aarch64-cross-ubuntu-minimal:bullseye-${UBUNTU} | gzip > aarch64.tar.gz
