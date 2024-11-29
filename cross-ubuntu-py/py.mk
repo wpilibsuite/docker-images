@@ -204,6 +204,7 @@ build/cross-roborio-py313:
 		--build-arg AC_TARGET_HOST=$(AC_TARGET_HOST_ROBORIO) \
 		--build-arg VERSION=$(VERSION_ROBORIO) \
 		--build-arg MACHINE_ARG="--machine=roborio" \
+		--build-arg EXTRA_CROSSENV_ARGS="--platform-tag=linux_roborio" \
 		-f Dockerfile.py313
 
 .PHONY: push/cross-roborio-py313
