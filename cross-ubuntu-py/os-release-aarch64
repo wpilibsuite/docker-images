@@ -1,8 +1,8 @@
-PRETTY_NAME="Raspbian GNU/Linux 11 (bullseye)"
+PRETTY_NAME="Raspbian GNU/Linux 12 (bookworm)"
 NAME="Raspbian GNU/Linux"
-VERSION_ID="11"
-VERSION="11 (bullseye)"
-VERSION_CODENAME=bullseye
+VERSION_ID="12"
+VERSION="12 (bookworm)"
+VERSION_CODENAME=bookworm
 ID=raspbian
 ID_LIKE=debian
 HOME_URL="http://www.raspbian.org/"

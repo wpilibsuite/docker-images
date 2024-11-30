@@ -4,14 +4,14 @@ YEAR?=2025
 DOCKER_USER?=wpilib
 
 TYPE_RASPBIAN=raspbian
-VERSION_RASPBIAN=bullseye
-TARGET_HOST_RASPBIAN=armv6-bullseye-linux-gnueabihf
-AC_TARGET_HOST_RASPBIAN=armv7l-bullseye-linux-gnueabihf
+VERSION_RASPBIAN=bookworm
+TARGET_HOST_RASPBIAN=armv6-bookworm-linux-gnueabihf
+AC_TARGET_HOST_RASPBIAN=armv7l-bookworm-linux-gnueabihf
 
 TYPE_AARCH64=aarch64
-VERSION_AARCH64=bullseye
-TARGET_HOST_AARCH64=aarch64-bullseye-linux-gnu
-AC_TARGET_HOST_AARCH64=aarch64-bullseye-linux-gnu
+VERSION_AARCH64=bookworm
+TARGET_HOST_AARCH64=aarch64-bookworm-linux-gnu
+AC_TARGET_HOST_AARCH64=aarch64-bookworm-linux-gnu
 
 TYPE_ROBORIO=roborio
 VERSION_ROBORIO=2025
