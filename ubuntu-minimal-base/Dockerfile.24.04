@@ -1,0 +1,17 @@
+ARG UBUNTU=24.04
+FROM ubuntu:${UBUNTU}
+
+RUN set -xe; \
+    apt-get update; \
+    apt-get install -y tzdata; \
+    apt-get install -y \
+        ca-certificates \
+        curl \
+        git \
+        make \
+        unzip \
+        wget \
+        zip; \
+    rm -rf /var/lib/apt/lists/*
+
+WORKDIR /
