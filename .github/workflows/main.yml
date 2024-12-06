@@ -10,28 +10,38 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        ubuntu-version:
+        - 22.04
+        - 24.04
     steps:
       - uses: actions/checkout@v4
-      - run: make update
-      - run: make build
+      - run: make UBUNTU=${{ matrix.ubuntu-version }} update
+      - run: make UBUNTU=${{ matrix.ubuntu-version }} build
       - run: |
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-          make push
+          make UBUNTU=${{ matrix.ubuntu-version }} push
         if: ${{ github.repository_owner == 'wpilibsuite' && github.ref == 'refs/heads/main' }} 
 
   build-minimal:
     name: Build Minimal
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        ubuntu-version:
+        - 22.04
+        - 24.04
     steps:
       - uses: actions/checkout@v4
-      - run: make update
-      - run: make build/minimal-cross
+      - run: make UBUNTU=${{ matrix.ubuntu-version }} update
+      - run: make UBUNTU=${{ matrix.ubuntu-version }} build/minimal-cross
       - run: |
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-          make push/minimal-cross
+          make UBUNTU=${{ matrix.ubuntu-version }} push/minimal-cross
         if: ${{ github.repository_owner == 'wpilibsuite' && github.ref == 'refs/heads/main' }}
 
-      - run: make save/minimal-cross
+      - run: make UBUNTU=${{ matrix.ubuntu-version }} save/minimal-cross
       - uses: actions/upload-artifact@v4
         with:
           name: roborio
