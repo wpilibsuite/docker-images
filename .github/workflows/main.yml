@@ -44,17 +44,17 @@ jobs:
       - run: make UBUNTU=${{ matrix.ubuntu-version }} save/minimal-cross
       - uses: actions/upload-artifact@v4
         with:
-          name: roborio
+          name: roborio-${{ matrix.ubuntu-version }}
           path: roborio.tar.gz
           retention-days: 1
       - uses: actions/upload-artifact@v4
         with:
-          name: raspbian
+          name: raspbian-${{ matrix.ubuntu-version }}
           path: raspbian.tar.gz
           retention-days: 1
       - uses: actions/upload-artifact@v4
         with:
-          name: aarch64
+          name: aarch64-${{ matrix.ubuntu-version }}
           path: aarch64.tar.gz
           retention-days: 1
 
@@ -83,7 +83,7 @@ jobs:
     - name: Download image
       uses: actions/download-artifact@v4
       with:
-        name: ${{ matrix.type }}
+        name: ${{ matrix.type }}-22.04
         path: img
 
     - name: Load image
