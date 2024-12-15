@@ -18,6 +18,7 @@ RUN apt-get update && apt-get install -y apt-transport-https \
     g++ --no-install-recommends \
     gcc \
     gdb \
+    gfortran \
     git \
     java-common \
     libc6-dev \
