@@ -18,6 +18,7 @@ RUN apt-get update && apt-get install -y apt-transport-https \
     g++ --no-install-recommends \
     gcc \
     gdb \
+    gfortran \
     git \
     java-common \
     libc6-dev \
@@ -41,7 +42,6 @@ RUN apt-get update && apt-get install -y apt-transport-https \
     unzip \
     wget \
     zip \
-    gfortran \
   && rm -rf /var/lib/apt/lists/*
 
 ENV JAVA_HOME /usr/lib/jvm/java-17-openjdk-amd64
