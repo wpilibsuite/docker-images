@@ -68,8 +68,6 @@ jobs:
         - raspbian
         - aarch64
         pyversion:
-        - py39
-        - py310
         - py311
         - py312
         - py313
