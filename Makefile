@@ -1,11 +1,12 @@
 UBUNTU?=22.04
 OPENSDK_UBUNTU?=20.04
+DEBIAN?=bookworm
 
 DOCKER_USER?=wpilib
 
-.PHONY: usage update push build \
-	$(patsubst %,build/%, base cross minimal-base minimal-cross opensdk)
-	$(patsubst %,push/%, base cross minimal-base minimal-cross opensdk)
+.PHONY: usage update update/arm push build \
+	$(patsubst %,build/%, arm-base base cross minimal-base minimal-cross opensdk)
+	$(patsubst %,push/%, arm-base base cross minimal-base minimal-cross opensdk)
 usage:
 	@echo "Run make update, make build, and make push"
 
@@ -13,7 +14,14 @@ update:
 	docker pull docker.io/ubuntu:${UBUNTU}
 	docker pull docker.io/ubuntu:${OPENSDK_UBUNTU}
 
+update/arm:
+	docker pull docker.io/debian:${DEBIAN}
+
 build: build/base build/cross build/opensdk
+
+build/arm-base:
+	cd debian-base && \
+		docker build -t ${DOCKER_USER}/debian-base:arm64-${DEBIAN} -f Dockerfile.${DEBIAN} .
 
 build/base:
 	cd ubuntu-base && \
@@ -48,6 +56,9 @@ build/opensdk:
 		docker build -t ${DOCKER_USER}/opensdk-ubuntu:${OPENSDK_UBUNTU} --build-arg OPENSDK_UBUNTU=${OPENSDK_UBUNTU} .
 
 push: $(patsubst %,push/%, base cross opensdk)
+
+push/arm-base:
+	docker push ${DOCKER_USER}/debian-base:arm64-${DEBIAN}
 
 push/base:
 	docker push ${DOCKER_USER}/ubuntu-base:${UBUNTU}

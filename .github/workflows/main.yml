@@ -24,6 +24,22 @@ jobs:
           make UBUNTU=${{ matrix.ubuntu-version }} push
         if: ${{ github.repository_owner == 'wpilibsuite' && github.ref == 'refs/heads/main' }} 
 
+  build-arm:
+    name: Build ARM
+    runs-on: ubuntu-24.04-arm
+    strategy:
+      matrix:
+        debian-version:
+        - bookworm
+    steps:
+      - uses: actions/checkout@v4
+      - run: make DEBIAN=${{ matrix.debian-version }} update/arm
+      - run: make DEBIAN=${{ matrix.debian-version }} build/arm-base
+      - run: |
+          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+          make UBUNTU=${{ matrix.debian-version }} push/arm-base
+        if: ${{ github.repository_owner == 'wpilibsuite' && github.ref == 'refs/heads/main' }} 
+
   build-minimal:
     name: Build Minimal
     runs-on: ubuntu-latest
