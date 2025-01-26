@@ -21,7 +21,7 @@ build: build/base build/cross build/opensdk
 
 build/arm-base:
 	cd debian-base && \
-		docker build -t ${DOCKER_USER}/debian-base:${DEBIAN} -f Dockerfile.${DEBIAN} .
+		docker build -t ${DOCKER_USER}/debian-base:arm64-${DEBIAN} -f Dockerfile.${DEBIAN} .
 
 build/base:
 	cd ubuntu-base && \
@@ -58,7 +58,7 @@ build/opensdk:
 push: $(patsubst %,push/%, base cross opensdk)
 
 push/arm-base:
-	docker push ${DOCKER_USER}/debian-base:${DEBIAN}
+	docker push ${DOCKER_USER}/debian-base:arm64-${DEBIAN}
 
 push/base:
 	docker push ${DOCKER_USER}/ubuntu-base:${UBUNTU}
