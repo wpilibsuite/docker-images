@@ -56,6 +56,7 @@ build/cross-aarch64-py39:
 		--build-arg TARGET_HOST=$(TARGET_HOST_AARCH64) \
 		--build-arg AC_TARGET_HOST=$(AC_TARGET_HOST_AARCH64) \
 		--build-arg VERSION=$(VERSION_AARCH64) \
+		--build-arg EXTRA_CROSSENV_ARGS="--platform-tag=manylinux_2_36_aarch64" \
 		-f Dockerfile.py39
 
 .PHONY: push/cross-aarch64-py39
@@ -92,6 +93,7 @@ build/cross-aarch64-py310:
 		--build-arg TARGET_HOST=$(TARGET_HOST_AARCH64) \
 		--build-arg AC_TARGET_HOST=$(AC_TARGET_HOST_AARCH64) \
 		--build-arg VERSION=$(VERSION_AARCH64) \
+		--build-arg EXTRA_CROSSENV_ARGS="--platform-tag=manylinux_2_36_aarch64" \
 		-f Dockerfile.py310
 
 .PHONY: push/cross-aarch64-py310
@@ -128,6 +130,7 @@ build/cross-aarch64-py311:
 		--build-arg TARGET_HOST=$(TARGET_HOST_AARCH64) \
 		--build-arg AC_TARGET_HOST=$(AC_TARGET_HOST_AARCH64) \
 		--build-arg VERSION=$(VERSION_AARCH64) \
+		--build-arg EXTRA_CROSSENV_ARGS="--platform-tag=manylinux_2_36_aarch64" \
 		-f Dockerfile.py311
 
 .PHONY: push/cross-aarch64-py311
@@ -165,6 +168,7 @@ build/cross-aarch64-py312:
 		--build-arg TARGET_HOST=$(TARGET_HOST_AARCH64) \
 		--build-arg AC_TARGET_HOST=$(AC_TARGET_HOST_AARCH64) \
 		--build-arg VERSION=$(VERSION_AARCH64) \
+		--build-arg EXTRA_CROSSENV_ARGS="--platform-tag=manylinux_2_36_aarch64" \
 		-f Dockerfile.py312
 
 .PHONY: push/cross-aarch64-py312
@@ -222,6 +226,7 @@ build/cross-aarch64-py313:
 		--build-arg TARGET_HOST=$(TARGET_HOST_AARCH64) \
 		--build-arg AC_TARGET_HOST=$(AC_TARGET_HOST_AARCH64) \
 		--build-arg VERSION=$(VERSION_AARCH64) \
+		--build-arg EXTRA_CROSSENV_ARGS="--platform-tag=manylinux_2_36_aarch64" \
 		-f Dockerfile.py313
 
 .PHONY: push/cross-aarch64-py313
