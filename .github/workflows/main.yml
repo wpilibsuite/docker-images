@@ -70,6 +70,12 @@ jobs:
           name: raspbian-${{ matrix.ubuntu-version }}
           path: raspbian.tar.gz
           retention-days: 1
+      - name: Upload systemcore cross base image
+        uses: actions/upload-artifact@v4
+        with:
+          name: systemcore-${{ matrix.ubuntu-version }}
+          path: systemcore.tar.gz
+          retention-days: 1
 
   build-python:
     name: Build Python Images
