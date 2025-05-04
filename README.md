@@ -49,7 +49,6 @@ gazebo-ubuntu
 
 roborio-cross-ubuntu-pyXXX
 raspbian-cross-ubuntu-pyXXX
-aarch64-cross-ubuntu-pyXXX
 - Based on the minimal cross compiler image
 - Contains crossenv at /build/venv for cross-compiling python wheels
 - Published as wpilib/{type}-cross-ubuntu:{version}-{ubuntu}-py{pyversion}
