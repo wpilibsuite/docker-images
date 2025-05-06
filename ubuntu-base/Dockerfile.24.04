@@ -26,6 +26,7 @@ RUN apt-get update && apt-get install -y apt-transport-https \
     libglu1-mesa-dev \
     libisl-dev \
     libopencv-dev \
+    libopencv-java \
     libvulkan-dev \
     libx11-dev \
     libxcursor-dev \
