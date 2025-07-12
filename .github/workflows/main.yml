@@ -85,9 +85,9 @@ jobs:
         - 22.04
         - 24.04
         include:
-        - type: raspbian
         - type: roborio
           pyversion: py313
+        - type: raspbian
 
     steps:
     - uses: actions/checkout@v4
