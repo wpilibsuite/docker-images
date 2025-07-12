@@ -83,6 +83,9 @@ jobs:
         - py311
         - py312
         - py313
+        ubuntu_version:
+        - 22.04
+        - 24.04
         include:
         - type: roborio
           pyversion: py313
@@ -93,7 +96,7 @@ jobs:
     - name: Download image
       uses: actions/download-artifact@v4
       with:
-        name: ${{ matrix.type }}-22.04
+        name: ${{ matrix.type }}-${{ matrix.ubuntu_version }}
         path: img
 
     - name: Load image
@@ -102,10 +105,10 @@ jobs:
         rm img/${{ matrix.type }}.tar.gz
 
     - name: Build image
-      run: make build/cross-${{ matrix.type }}-${{ matrix.pyversion }}
+      run: make UBUNTU=${{ matrix.ubuntu-version }} build/cross-${{ matrix.type }}-${{ matrix.pyversion }}
 
     - name: Upload image
       run: |
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-          make push/cross-${{ matrix.type }}-${{ matrix.pyversion }}
+          make UBUNTU=${{ matrix.ubuntu-version }} push/cross-${{ matrix.type }}-${{ matrix.pyversion }}
       if: ${{ github.repository_owner == 'wpilibsuite' && github.ref == 'refs/heads/main' }}
