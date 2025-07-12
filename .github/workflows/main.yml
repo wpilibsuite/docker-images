@@ -77,8 +77,6 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        type:
-        - raspbian
         pyversion:
         - py311
         - py312
@@ -87,6 +85,7 @@ jobs:
         - 22.04
         - 24.04
         include:
+        - type: raspbian
         - type: roborio
           pyversion: py313
 
