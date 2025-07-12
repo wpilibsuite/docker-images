@@ -77,6 +77,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
+        type:
+        - raspbian
         pyversion:
         - py311
         - py312
@@ -87,7 +89,7 @@ jobs:
         include:
         - type: roborio
           pyversion: py313
-        - type: raspbian
+          ubuntu_version: 22.04
 
     steps:
     - uses: actions/checkout@v4
