@@ -31,16 +31,20 @@ RUN apt-get update && apt-get install -y apt-transport-https \
     libxrandr-dev \
     make \
     mesa-common-dev \
-    openjdk-17-jdk \
     python3-dev \
     python3-pip \
     python3-setuptools \
     sudo \
     unzip \
     wget \
-    zip \
-  && rm -rf /var/lib/apt/lists/*
+    zip
 
-ENV JAVA_HOME /usr/lib/jvm/java-17-openjdk-arm64
+RUN curl https://packages.adoptium.net/artifactory/api/gpg/key/public | gpg --dearmor | tee /etc/apt/trusted.gpg.d/adoptium.gpg > /dev/null
+
+RUN echo "deb https://packages.adoptium.net/artifactory/deb $(awk -F= '/^VERSION_CODENAME/{print$2}' /etc/os-release) main" | tee /etc/apt/sources.list.d/adoptium.list
+
+RUN apt update && apt install -y temurin-21-jdk && rm -rf /var/lib/apt/lists/*
+
+ENV JAVA_HOME /usr/lib/jvm/temurin-21-jdk-arm64
 
 WORKDIR /
