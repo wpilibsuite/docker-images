@@ -62,19 +62,19 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: roborio-${{ matrix.ubuntu-version }}
-          path: roborio.tar.gz
+          path: roborio.tar.zst
           retention-days: 1
       - name: Upload raspbian cross base image
         uses: actions/upload-artifact@v4
         with:
           name: raspbian-${{ matrix.ubuntu-version }}
-          path: raspbian.tar.gz
+          path: raspbian.tar.zst
           retention-days: 1
       - name: Upload systemcore cross base image
         uses: actions/upload-artifact@v4
         with:
           name: systemcore-${{ matrix.ubuntu-version }}
-          path: systemcore.tar.gz
+          path: systemcore.tar.zst
           retention-days: 1
 
   build-python:
@@ -108,8 +108,8 @@ jobs:
 
     - name: Load image
       run: |
-        unzstd -c img/${{ matrix.type }}.tar.gz | docker load
-        rm img/${{ matrix.type }}.tar.gz
+        unzstd -c img/${{ matrix.type }}.tar.zst | docker load
+        rm img/${{ matrix.type }}.tar.zst
 
     - name: Build image
       run: make UBUNTU=${{ matrix.ubuntu-version }} build/cross-${{ matrix.type }}-${{ matrix.pyversion }}
