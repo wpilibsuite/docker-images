@@ -13,13 +13,18 @@ VERSION_ROBORIO=2025
 TARGET_HOST_ROBORIO=arm-frc2025-linux-gnueabi
 AC_TARGET_HOST_ROBORIO=armv7l-frc2025-linux-gnueabi
 
+TYPE_SYSTEMCORE=systemcore
+VERSION_SYSTEMCORE=2027
+TARGET_HOST_SYSTEMCORE=aarch64-bookworm-linux-gnu
+AC_TARGET_HOST_SYSTEMCORE=aarch64-bookworm-linux-gnu
+
 
 .PHONY: build/cross-python
-build/cross-python: build/cross-raspbian-py311 build/cross-raspbian-py312 build/cross-roborio-py313 build/cross-raspbian-py313
+build/cross-python: build/cross-raspbian-py311 build/cross-raspbian-py312 build/cross-roborio-py313 build/cross-systemcore-py313 build/cross-raspbian-py313
 
 
 .PHONY: push/cross-python
-push/cross-python: push/cross-raspbian-py311 push/cross-raspbian-py312 push/cross-roborio-py313 push/cross-raspbian-py313
+push/cross-python: push/cross-raspbian-py311 push/cross-raspbian-py312 push/cross-roborio-py313 push/cross-systemcore-py313 push/cross-raspbian-py313
 
 
 #
@@ -99,3 +104,26 @@ build/cross-roborio-py313:
 .PHONY: push/cross-roborio-py313
 push/cross-roborio-py313:
 	docker push wpilib/$(TYPE_ROBORIO)-cross-ubuntu:$(YEAR)-$(UBUNTU)-py313
+
+
+# Adding the tags, but pip ignores them because of https://github.com/benfogle/crossenv/issues/126
+SC_ML_VERSIONS := $(shell seq 35 -1 17)
+SC_MANYLINUX_TAGS := $(foreach v,$(SC_ML_VERSIONS),--platform-tag=manylinux_2_$(v)_aarch64)
+
+
+.PHONY: build/cross-systemcore-py313
+build/cross-systemcore-py313:
+	cd cross-ubuntu-py && \
+	docker build . \
+		-t wpilib/$(TYPE_SYSTEMCORE)-cross-ubuntu:$(YEAR)-$(UBUNTU)-py313 \
+		--build-arg ARCH=$(TYPE_SYSTEMCORE) \
+		--build-arg TARGET_HOST=$(TARGET_HOST_SYSTEMCORE) \
+		--build-arg AC_TARGET_HOST=$(AC_TARGET_HOST_SYSTEMCORE) \
+		--build-arg VERSION=$(VERSION_SYSTEMCORE) \
+		--build-arg MACHINE_ARG="--machine=systemcore" \
+		--build-arg EXTRA_CROSSENV_ARGS="--platform-tag=linux_systemcore $(SC_MANYLINUX_TAGS) --platform-tag=linux_aarch64" \
+		-f Dockerfile.py313
+
+.PHONY: push/cross-systemcore-py313
+push/cross-systemcore-py313:
+	docker push wpilib/$(TYPE_SYSTEMCORE)-cross-ubuntu:$(YEAR)-$(UBUNTU)-py313
