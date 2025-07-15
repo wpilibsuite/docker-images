@@ -87,6 +87,5 @@ save/minimal-cross:
 	docker save ${DOCKER_USER}/roborio-cross-ubuntu-minimal:2025-${UBUNTU} | gzip > roborio.tar.gz
 	docker save ${DOCKER_USER}/systemcore-cross-ubuntu-minimal:2027-${UBUNTU} | gzip > systemcore.tar.gz
 	docker save ${DOCKER_USER}/raspbian-cross-ubuntu-minimal:bookworm-${UBUNTU} | gzip > raspbian.tar.gz
-	docker save ${DOCKER_USER}/aarch64-cross-ubuntu-minimal:bookworm-${UBUNTU} | gzip > aarch64.tar.gz
 
 include cross-ubuntu-py/py.mk
