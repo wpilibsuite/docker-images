@@ -84,8 +84,8 @@ push/opensdk:
 
 .PHONY: save/minimal-cross
 save/minimal-cross:
-	docker save ${DOCKER_USER}/roborio-cross-ubuntu-minimal:2025-${UBUNTU} | gzip > roborio.tar.gz
-	docker save ${DOCKER_USER}/systemcore-cross-ubuntu-minimal:2027-${UBUNTU} | gzip > systemcore.tar.gz
-	docker save ${DOCKER_USER}/raspbian-cross-ubuntu-minimal:bookworm-${UBUNTU} | gzip > raspbian.tar.gz
+	docker save ${DOCKER_USER}/roborio-cross-ubuntu-minimal:2025-${UBUNTU} | zstd > roborio.tar.gz
+	docker save ${DOCKER_USER}/systemcore-cross-ubuntu-minimal:2027-${UBUNTU} | zstd > systemcore.tar.gz
+	docker save ${DOCKER_USER}/raspbian-cross-ubuntu-minimal:bookworm-${UBUNTU} | zstd > raspbian.tar.gz
 
 include cross-ubuntu-py/py.mk

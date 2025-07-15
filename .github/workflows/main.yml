@@ -108,7 +108,7 @@ jobs:
 
     - name: Load image
       run: |
-        gunzip -c img/${{ matrix.type }}.tar.gz | docker load
+        unzstd -c img/${{ matrix.type }}.tar.gz | docker load
         rm img/${{ matrix.type }}.tar.gz
 
     - name: Build image
