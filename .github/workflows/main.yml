@@ -96,6 +96,9 @@ jobs:
         - type: roborio
           pyversion: py313
           ubuntu_version: 22.04
+        - type: systemcore
+          pyversion: py313
+          ubuntu_version: 22.04
 
     steps:
     - uses: actions/checkout@v4
