@@ -1,0 +1,12 @@
+ARG UBUNTU=24.04
+ARG TYPE=base
+FROM wpilib/ubuntu-${TYPE}:${UBUNTU}
+
+# Install toolchain
+RUN curl -SL https://github.com/wpilibsuite/opensdk/releases/download/v2025-2/arm64-bookworm-2025-x86_64-linux-gnu-Toolchain-12.2.0.tgz | sh -c 'mkdir -p /usr/local && cd /usr/local && tar xzf - --strip-components=2'
+
+RUN apt update && apt install -y openjdk-21-jdk && rm -rf /var/lib/apt/lists/*
+
+ENV JAVA_HOME /usr/lib/jvm/java-21-openjdk-amd64
+
+WORKDIR /
