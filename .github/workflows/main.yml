@@ -98,7 +98,7 @@ jobs:
           ubuntu-version: 22.04
         - type: systemcore
           pyversion: py313
-          ubuntu-version: 22.04
+          ubuntu-version: 24.04
 
     steps:
     - uses: actions/checkout@v4
