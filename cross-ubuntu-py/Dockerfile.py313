@@ -100,7 +100,7 @@ ARG EXTRA_CROSSENV_ARGS=
 
 RUN set -xe; \
     ldconfig; \
-    python3.13 -m pip install 'crossenv~=1.5.0'; \
+    python3.13 -m pip install https://github.com/virtuald/crossenv/archive/patch-pip-packaging-tags.zip; \
     python3.13 -m crossenv /build/crosspy/bin/python3.13 /build/venv ${MACHINE_ARG} --sysroot=$(${TARGET_HOST}-gcc -print-sysroot) --env UNIXCONFDIR=/build/venv/cross/etc ${EXTRA_CROSSENV_ARGS}; \
     /build/venv/bin/cross-pip install wheel;
 
