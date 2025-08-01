@@ -42,9 +42,17 @@ build/cross-raspbian-py311:
 		--build-arg VERSION=$(VERSION_RASPBIAN) \
 		-f Dockerfile.py311
 
+	cd cross-ubuntu-py && \
+	docker build . \
+		-t wpilib/$(TYPE_RASPBIAN)-cross-ubuntu:2027-$(VERSION_RASPBIAN)-$(UBUNTU)-py311 \
+		--build-arg IMAGE=wpilib/$(TYPE_RASPBIAN)-cross-ubuntu:$(YEAR)-$(VERSION_RASPBIAN)-$(UBUNTU)-py311 \
+		-f Dockerfile.raspbian-2027
+
 .PHONY: push/cross-raspbian-py311
 push/cross-raspbian-py311:
 	docker push wpilib/$(TYPE_RASPBIAN)-cross-ubuntu:$(YEAR)-$(VERSION_RASPBIAN)-$(UBUNTU)-py311
+
+	docker push wpilib/$(TYPE_RASPBIAN)-cross-ubuntu:2027-$(VERSION_RASPBIAN)-$(UBUNTU)-py311
 
 
 #
@@ -62,9 +70,17 @@ build/cross-raspbian-py312:
 		--build-arg VERSION=$(VERSION_RASPBIAN) \
 		-f Dockerfile.py312
 
+	cd cross-ubuntu-py && \
+	docker build . \
+		-t wpilib/$(TYPE_RASPBIAN)-cross-ubuntu:2027-$(VERSION_RASPBIAN)-$(UBUNTU)-py312 \
+		--build-arg IMAGE=wpilib/$(TYPE_RASPBIAN)-cross-ubuntu:$(YEAR)-$(VERSION_RASPBIAN)-$(UBUNTU)-py312 \
+		-f Dockerfile.raspbian-2027
+
 .PHONY: push/cross-raspbian-py312
 push/cross-raspbian-py312:
 	docker push wpilib/$(TYPE_RASPBIAN)-cross-ubuntu:$(YEAR)-$(VERSION_RASPBIAN)-$(UBUNTU)-py312
+
+	docker push wpilib/$(TYPE_RASPBIAN)-cross-ubuntu:2027-$(VERSION_RASPBIAN)-$(UBUNTU)-py312
 
 
 #
@@ -83,9 +99,17 @@ build/cross-raspbian-py313:
 		--build-arg EXTRA_CROSS_CONFIGURE_ARGS="ac_cv_libatomic_needed=yes" \
 		-f Dockerfile.py313
 
+	cd cross-ubuntu-py && \
+	docker build . \
+		-t wpilib/$(TYPE_RASPBIAN)-cross-ubuntu:2027-$(VERSION_RASPBIAN)-$(UBUNTU)-py313 \
+		--build-arg IMAGE=wpilib/$(TYPE_RASPBIAN)-cross-ubuntu:$(YEAR)-$(VERSION_RASPBIAN)-$(UBUNTU)-py313 \
+		-f Dockerfile.raspbian-2027
+
 .PHONY: push/cross-raspbian-py313
 push/cross-raspbian-py313:
 	docker push wpilib/$(TYPE_RASPBIAN)-cross-ubuntu:$(YEAR)-$(VERSION_RASPBIAN)-$(UBUNTU)-py313
+
+	docker push wpilib/$(TYPE_RASPBIAN)-cross-ubuntu:2027-$(VERSION_RASPBIAN)-$(UBUNTU)-py313
 
 
 .PHONY: build/cross-roborio-py313

@@ -1,0 +1,5 @@
+ARG IMAGE=invalid-image
+
+FROM ${IMAGE}
+
+COPY pip-raspbian-2027.conf /build/venv/cross/pip.conf
