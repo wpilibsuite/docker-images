@@ -27,6 +27,15 @@ build/cross-python: build/cross-raspbian-py311 build/cross-raspbian-py312 build/
 push/cross-python: push/cross-raspbian-py311 push/cross-raspbian-py312 push/cross-roborio-py313 push/cross-systemcore-py313 push/cross-raspbian-py313
 
 
+# raspbian manylinux tags for crossenv
+RPI_ML_VERSIONS := $(shell seq 36 -1 17)
+RPI_MANYLINUX_TAGS := $(foreach v,$(SC_ML_VERSIONS),--platform-tag=manylinux_2_$(v)_armv7l)
+
+# systemcore manylinux tags for crossenv
+SC_ML_VERSIONS := $(shell seq 35 -1 17)
+SC_MANYLINUX_TAGS := $(foreach v,$(SC_ML_VERSIONS),--platform-tag=manylinux_2_$(v)_aarch64)
+
+
 #
 # Python 3.11
 #
@@ -40,6 +49,7 @@ build/cross-raspbian-py311:
 		--build-arg TARGET_HOST=$(TARGET_HOST_RASPBIAN) \
 		--build-arg AC_TARGET_HOST=$(AC_TARGET_HOST_RASPBIAN) \
 		--build-arg VERSION=$(VERSION_RASPBIAN) \
+		--build-arg EXTRA_CROSSENV_ARGS="$(RPI_MANYLINUX_TAGS) --platform-tag=linux_armv7l" \
 		-f Dockerfile.py311
 
 	cd cross-ubuntu-py && \
@@ -68,6 +78,7 @@ build/cross-raspbian-py312:
 		--build-arg TARGET_HOST=$(TARGET_HOST_RASPBIAN) \
 		--build-arg AC_TARGET_HOST=$(AC_TARGET_HOST_RASPBIAN) \
 		--build-arg VERSION=$(VERSION_RASPBIAN) \
+		--build-arg EXTRA_CROSSENV_ARGS="$(RPI_MANYLINUX_TAGS) --platform-tag=linux_armv7l" \
 		-f Dockerfile.py312
 
 	cd cross-ubuntu-py && \
@@ -97,6 +108,7 @@ build/cross-raspbian-py313:
 		--build-arg AC_TARGET_HOST=$(AC_TARGET_HOST_RASPBIAN) \
 		--build-arg VERSION=$(VERSION_RASPBIAN) \
 		--build-arg EXTRA_CROSS_CONFIGURE_ARGS="ac_cv_libatomic_needed=yes" \
+		--build-arg EXTRA_CROSSENV_ARGS="$(RPI_MANYLINUX_TAGS) --platform-tag=linux_armv7l" \
 		-f Dockerfile.py313
 
 	cd cross-ubuntu-py && \
@@ -129,10 +141,6 @@ build/cross-roborio-py313:
 push/cross-roborio-py313:
 	docker push wpilib/$(TYPE_ROBORIO)-cross-ubuntu:$(YEAR)-$(UBUNTU)-py313
 
-
-# Adding the tags, but pip ignores them because of https://github.com/benfogle/crossenv/issues/126
-SC_ML_VERSIONS := $(shell seq 35 -1 17)
-SC_MANYLINUX_TAGS := $(foreach v,$(SC_ML_VERSIONS),--platform-tag=manylinux_2_$(v)_aarch64)
 
 
 .PHONY: build/cross-systemcore-py313
