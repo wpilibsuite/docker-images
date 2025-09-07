@@ -8,6 +8,6 @@ RUN curl -SL https://github.com/wpilibsuite/opensdk/releases/download/v2025-2/ar
 
 RUN apt update && apt install -y openjdk-21-jdk && rm -rf /var/lib/apt/lists/*
 
-ENV JAVA_HOME /usr/lib/jvm/java-21-openjdk-amd64
+ENV JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64
 
 WORKDIR /
