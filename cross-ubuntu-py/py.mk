@@ -29,7 +29,7 @@ push/cross-python: push/cross-raspbian-py311 push/cross-raspbian-py312 push/cros
 
 # raspbian manylinux tags for crossenv
 RPI_ML_VERSIONS := $(shell seq 36 -1 17)
-RPI_MANYLINUX_TAGS := $(foreach v,$(SC_ML_VERSIONS),--platform-tag=manylinux_2_$(v)_armv7l)
+RPI_MANYLINUX_TAGS := $(foreach v,$(RPI_ML_VERSIONS),--platform-tag=manylinux_2_$(v)_armv7l)
 
 # systemcore manylinux tags for crossenv
 SC_ML_VERSIONS := $(shell seq 35 -1 17)
