@@ -45,6 +45,7 @@ build/cross-raspbian-py311:
 	cd cross-ubuntu-py && \
 	docker build . \
 		-t wpilib/$(TYPE_RASPBIAN)-cross-ubuntu:$(YEAR)-$(VERSION_RASPBIAN)-$(UBUNTU)-py311 \
+		--build-arg UBUNTU=$(UBUNTU) \
 		--build-arg ARCH=$(TYPE_RASPBIAN) \
 		--build-arg TARGET_HOST=$(TARGET_HOST_RASPBIAN) \
 		--build-arg AC_TARGET_HOST=$(AC_TARGET_HOST_RASPBIAN) \
@@ -74,6 +75,7 @@ build/cross-raspbian-py312:
 	cd cross-ubuntu-py && \
 	docker build . \
 		-t wpilib/$(TYPE_RASPBIAN)-cross-ubuntu:$(YEAR)-$(VERSION_RASPBIAN)-$(UBUNTU)-py312 \
+		--build-arg UBUNTU=$(UBUNTU) \
 		--build-arg ARCH=$(TYPE_RASPBIAN) \
 		--build-arg TARGET_HOST=$(TARGET_HOST_RASPBIAN) \
 		--build-arg AC_TARGET_HOST=$(AC_TARGET_HOST_RASPBIAN) \
@@ -103,6 +105,7 @@ build/cross-raspbian-py313:
 	cd cross-ubuntu-py && \
 	docker build . \
 		-t wpilib/$(TYPE_RASPBIAN)-cross-ubuntu:$(YEAR)-$(VERSION_RASPBIAN)-$(UBUNTU)-py313 \
+		--build-arg UBUNTU=$(UBUNTU) \
 		--build-arg ARCH=$(TYPE_RASPBIAN) \
 		--build-arg TARGET_HOST=$(TARGET_HOST_RASPBIAN) \
 		--build-arg AC_TARGET_HOST=$(AC_TARGET_HOST_RASPBIAN) \
@@ -129,6 +132,7 @@ build/cross-roborio-py313:
 	cd cross-ubuntu-py && \
 	docker build . \
 		-t wpilib/$(TYPE_ROBORIO)-cross-ubuntu:$(YEAR)-$(UBUNTU)-py313 \
+		--build-arg UBUNTU=$(UBUNTU) \
 		--build-arg ARCH=$(TYPE_ROBORIO) \
 		--build-arg TARGET_HOST=$(TARGET_HOST_ROBORIO) \
 		--build-arg AC_TARGET_HOST=$(AC_TARGET_HOST_ROBORIO) \
@@ -148,6 +152,7 @@ build/cross-systemcore-py313:
 	cd cross-ubuntu-py && \
 	docker build . \
 		-t wpilib/$(TYPE_SYSTEMCORE)-cross-ubuntu:$(YEAR)-$(UBUNTU)-py313 \
+		--build-arg UBUNTU=$(UBUNTU) \
 		--build-arg ARCH=$(TYPE_SYSTEMCORE) \
 		--build-arg TARGET_HOST=$(TARGET_HOST_SYSTEMCORE) \
 		--build-arg AC_TARGET_HOST=$(AC_TARGET_HOST_SYSTEMCORE) \
