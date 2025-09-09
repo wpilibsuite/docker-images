@@ -18,11 +18,13 @@ RUN apt-get update && apt-get install -y apt-transport-https \
     git \
     java-common \
     libc6-dev \
+    libclang-dev \
     libgl1-mesa-dev \
     libglu1-mesa-dev \
     libisl-dev \
     libopencv-dev \
     libopencv-java \
+    libssl-dev \
     libvulkan-dev \
     libx11-dev \
     libxcursor-dev \
