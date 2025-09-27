@@ -101,6 +101,7 @@ jobs:
         - py311
         - py312
         - py313
+        - py314
         ubuntu-version:
         - 22.04
         - 24.04
@@ -108,8 +109,14 @@ jobs:
         - type: roborio
           pyversion: py313
           ubuntu-version: 22.04
+        - type: roborio
+          pyversion: py314
+          ubuntu-version: 22.04
         - type: systemcore
           pyversion: py313
+          ubuntu-version: 24.04
+        - type: systemcore
+          pyversion: py314
           ubuntu-version: 24.04
 
     steps:
