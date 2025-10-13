@@ -1,6 +1,6 @@
 
 UBUNTU?=22.04
-YEAR?=2025
+YEAR?=2026
 DOCKER_USER?=wpilib
 
 TYPE_RASPBIAN=raspbian
