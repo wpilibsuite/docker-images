@@ -1,6 +1,6 @@
 
 UBUNTU?=22.04
-YEAR?=2025
+YEAR?=2026
 DOCKER_USER?=wpilib
 
 TYPE_RASPBIAN=raspbian
@@ -20,11 +20,19 @@ AC_TARGET_HOST_SYSTEMCORE=aarch64-bookworm-linux-gnu
 
 
 .PHONY: build/cross-python
-build/cross-python: build/cross-raspbian-py311 build/cross-raspbian-py312 build/cross-roborio-py313 build/cross-systemcore-py313 build/cross-raspbian-py313
+build/cross-python: \
+	build/cross-raspbian-py311 \
+	build/cross-raspbian-py312 \
+	build/cross-roborio-py313 build/cross-systemcore-py313 build/cross-raspbian-py313 \
+	build/cross-roborio-py314 build/cross-systemcore-py314 build/cross-raspbian-py314
 
 
 .PHONY: push/cross-python
-push/cross-python: push/cross-raspbian-py311 push/cross-raspbian-py312 push/cross-roborio-py313 push/cross-systemcore-py313 push/cross-raspbian-py313
+push/cross-python: \
+	push/cross-raspbian-py311 \
+	push/cross-raspbian-py312 \
+	push/cross-roborio-py313 push/cross-systemcore-py313 push/cross-raspbian-py313 \
+	push/cross-roborio-py313 push/cross-systemcore-py314 push/cross-raspbian-py314
 
 
 # raspbian manylinux tags for crossenv
@@ -164,3 +172,73 @@ build/cross-systemcore-py313:
 .PHONY: push/cross-systemcore-py313
 push/cross-systemcore-py313:
 	docker push wpilib/$(TYPE_SYSTEMCORE)-cross-ubuntu:$(YEAR)-$(UBUNTU)-py313
+
+
+#
+# Python 3.14
+#
+
+.PHONY: build/cross-raspbian-py314
+build/cross-raspbian-py314:
+	cd cross-ubuntu-py && \
+	docker build . \
+		-t wpilib/$(TYPE_RASPBIAN)-cross-ubuntu:$(YEAR)-$(VERSION_RASPBIAN)-$(UBUNTU)-py314 \
+		--build-arg UBUNTU=$(UBUNTU) \
+		--build-arg ARCH=$(TYPE_RASPBIAN) \
+		--build-arg TARGET_HOST=$(TARGET_HOST_RASPBIAN) \
+		--build-arg AC_TARGET_HOST=$(AC_TARGET_HOST_RASPBIAN) \
+		--build-arg VERSION=$(VERSION_RASPBIAN) \
+		--build-arg EXTRA_CROSS_CONFIGURE_ARGS="ac_cv_libatomic_needed=yes" \
+		--build-arg EXTRA_CROSSENV_ARGS="$(RPI_MANYLINUX_TAGS) --platform-tag=linux_armv7l" \
+		-f Dockerfile.py314
+
+	cd cross-ubuntu-py && \
+	docker build . \
+		-t wpilib/$(TYPE_RASPBIAN)-cross-ubuntu:2027-$(VERSION_RASPBIAN)-$(UBUNTU)-py314 \
+		--build-arg IMAGE=wpilib/$(TYPE_RASPBIAN)-cross-ubuntu:$(YEAR)-$(VERSION_RASPBIAN)-$(UBUNTU)-py314 \
+		-f Dockerfile.raspbian-2027
+
+.PHONY: push/cross-raspbian-py314
+push/cross-raspbian-py314:
+	docker push wpilib/$(TYPE_RASPBIAN)-cross-ubuntu:$(YEAR)-$(VERSION_RASPBIAN)-$(UBUNTU)-py314
+
+	docker push wpilib/$(TYPE_RASPBIAN)-cross-ubuntu:2027-$(VERSION_RASPBIAN)-$(UBUNTU)-py314
+
+
+.PHONY: build/cross-roborio-py314
+build/cross-roborio-py314:
+	cd cross-ubuntu-py && \
+	docker build . \
+		-t wpilib/$(TYPE_ROBORIO)-cross-ubuntu:$(YEAR)-$(UBUNTU)-py314 \
+		--build-arg UBUNTU=$(UBUNTU) \
+		--build-arg ARCH=$(TYPE_ROBORIO) \
+		--build-arg TARGET_HOST=$(TARGET_HOST_ROBORIO) \
+		--build-arg AC_TARGET_HOST=$(AC_TARGET_HOST_ROBORIO) \
+		--build-arg VERSION=$(VERSION_ROBORIO) \
+		--build-arg MACHINE_ARG="--machine=roborio" \
+		--build-arg EXTRA_CROSSENV_ARGS="--platform-tag=linux_roborio" \
+		-f Dockerfile.py314
+
+.PHONY: push/cross-roborio-py314
+push/cross-roborio-py314:
+	docker push wpilib/$(TYPE_ROBORIO)-cross-ubuntu:$(YEAR)-$(UBUNTU)-py314
+
+
+
+.PHONY: build/cross-systemcore-py314
+build/cross-systemcore-py314:
+	cd cross-ubuntu-py && \
+	docker build . \
+		-t wpilib/$(TYPE_SYSTEMCORE)-cross-ubuntu:$(YEAR)-$(UBUNTU)-py314 \
+		--build-arg UBUNTU=$(UBUNTU) \
+		--build-arg ARCH=$(TYPE_SYSTEMCORE) \
+		--build-arg TARGET_HOST=$(TARGET_HOST_SYSTEMCORE) \
+		--build-arg AC_TARGET_HOST=$(AC_TARGET_HOST_SYSTEMCORE) \
+		--build-arg VERSION=$(VERSION_SYSTEMCORE) \
+		--build-arg MACHINE_ARG="--machine=systemcore" \
+		--build-arg EXTRA_CROSSENV_ARGS="--platform-tag=linux_systemcore $(SC_MANYLINUX_TAGS) --platform-tag=linux_aarch64" \
+		-f Dockerfile.py314
+
+.PHONY: push/cross-systemcore-py314
+push/cross-systemcore-py314:
+	docker push wpilib/$(TYPE_SYSTEMCORE)-cross-ubuntu:$(YEAR)-$(UBUNTU)-py314
