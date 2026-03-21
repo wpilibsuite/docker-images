@@ -42,11 +42,6 @@ aarch64-cross-ubuntu
    (e.g. bionic-18.04)
  - Minimal variant published as raspbian-cross-ubuntu-aarch64
 
-gazebo-ubuntu
- - Based on wpilib/ubuntu-base
- - Installs gazebo and protobuf required to build gazebo plugins
- - Published as wpilib/gazebo-ubuntu:host ubuntu version (e.g. 18.04)
-
 roborio-cross-ubuntu-pyXXX
 raspbian-cross-ubuntu-pyXXX
 - Based on the minimal cross compiler image
