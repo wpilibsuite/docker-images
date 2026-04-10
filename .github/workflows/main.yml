@@ -26,7 +26,39 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
         if: ${{ github.repository_owner == 'wpilibsuite' && github.ref == 'refs/heads/main' }}
       - run: make UBUNTU=${{ matrix.ubuntu-version }} push
-        if: ${{ github.repository_owner == 'wpilibsuite' && github.ref == 'refs/heads/main' }} 
+        if: ${{ github.repository_owner == 'wpilibsuite' && github.ref == 'refs/heads/main' }}
+
+  build-ds:
+    name: Build Driver Station
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: make update/ds
+      - run: make build/ds
+      - name: Log in to docker
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+        if: ${{ github.repository_owner == 'wpilibsuite' && github.ref == 'refs/heads/main' }}
+      - run: make push/ds
+        if: ${{ github.repository_owner == 'wpilibsuite' && github.ref == 'refs/heads/main' }}
+
+  build-ds:
+    name: Build Driver Station Arm
+    runs-on: ubuntu-24.04-arm
+    steps:
+      - uses: actions/checkout@v4
+      - run: make update/armds
+      - run: make build/armds
+      - name: Log in to docker
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+        if: ${{ github.repository_owner == 'wpilibsuite' && github.ref == 'refs/heads/main' }}
+      - run: make push/armds
+        if: ${{ github.repository_owner == 'wpilibsuite' && github.ref == 'refs/heads/main' }}
 
   build-arm:
     name: Build ARM
@@ -46,7 +78,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
         if: ${{ github.repository_owner == 'wpilibsuite' && github.ref == 'refs/heads/main' }}
       - run: make UBUNTU=${{ matrix.debian-version }} push/arm-base
-        if: ${{ github.repository_owner == 'wpilibsuite' && github.ref == 'refs/heads/main' }} 
+        if: ${{ github.repository_owner == 'wpilibsuite' && github.ref == 'refs/heads/main' }}
 
   build-minimal:
     name: Build Minimal
