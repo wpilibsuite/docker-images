@@ -44,7 +44,7 @@ jobs:
       - run: make push/ds
         if: ${{ github.repository_owner == 'wpilibsuite' && github.ref == 'refs/heads/main' }}
 
-  build-ds:
+  build-arm-ds:
     name: Build Driver Station Arm
     runs-on: ubuntu-24.04-arm
     steps:
