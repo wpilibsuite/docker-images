@@ -1,0 +1,31 @@
+FROM debian:trixie
+
+RUN apt-get update && apt-get install -y apt-transport-https \
+    ca-certificates \
+    gnupg \
+    tzdata \
+    build-essential \
+    ca-certificates \
+    cmake \
+    curl \
+    fakeroot \
+    g++ --no-install-recommends \
+    gcc \
+    gdb \
+    gfortran \
+    git \
+    libc6-dev \
+    make \
+    sudo \
+    unzip \
+    wget \
+    zip \
+    ninja-build \
+    libusb-1.0-0-dev \
+    libudev-dev \
+    libinput-dev \
+    libavahi-client-dev \
+    libavahi-common-dev \
+    libicu-dev
+
+WORKDIR /

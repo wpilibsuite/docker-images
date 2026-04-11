@@ -2,6 +2,8 @@ UBUNTU?=22.04
 OPENSDK_UBUNTU?=20.04
 DEBIAN?=bookworm
 
+DS?=trixie
+
 DOCKER_USER?=wpilib
 
 .PHONY: usage update update/arm push build \
@@ -93,3 +95,23 @@ save/minimal-cross:
 	docker save ${DOCKER_USER}/raspbian-cross-ubuntu-minimal:bookworm-${UBUNTU} | zstd > raspbian.tar.zst
 
 include cross-ubuntu-py/py.mk
+
+update/ds:
+	docker pull docker.io/debian:${DS}
+
+build/ds:
+	cd driverstation-base && \
+		docker build -t ${DOCKER_USER}/driverstation-base:x64 -f Dockerfile.x64 .
+
+push/ds:
+	docker push ${DOCKER_USER}/driverstation-base:x64
+
+update/armds:
+	docker pull docker.io/arm64v8/debian:${DS}
+
+build/armds:
+	cd driverstation-base && \
+		docker build -t ${DOCKER_USER}/driverstation-base:arm64 -f Dockerfile.arm64 .
+
+push/armds:
+	docker push ${DOCKER_USER}/driverstation-base:arm64
