@@ -103,19 +103,19 @@ jobs:
 
       - run: make UBUNTU=${{ matrix.ubuntu-version }} save/minimal-cross
       - name: Upload roborio cross base image
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: roborio-${{ matrix.ubuntu-version }}
           path: roborio.tar.zst
           retention-days: 1
       - name: Upload raspbian cross base image
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: raspbian-${{ matrix.ubuntu-version }}
           path: raspbian.tar.zst
           retention-days: 1
       - name: Upload systemcore cross base image
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: systemcore-${{ matrix.ubuntu-version }}
           path: systemcore.tar.zst
