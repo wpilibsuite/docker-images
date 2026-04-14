@@ -16,7 +16,7 @@ jobs:
         - 22.04
         - 24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - run: make UBUNTU=${{ matrix.ubuntu-version }} update
       - run: make UBUNTU=${{ matrix.ubuntu-version }} build
       - name: Log in to docker
@@ -32,7 +32,7 @@ jobs:
     name: Build Driver Station
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - run: make update/ds
       - run: make build/ds
       - name: Log in to docker
@@ -48,7 +48,7 @@ jobs:
     name: Build Driver Station Arm
     runs-on: ubuntu-24.04-arm
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - run: make update/armds
       - run: make build/armds
       - name: Log in to docker
@@ -68,7 +68,7 @@ jobs:
         debian-version:
         - bookworm
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - run: make DEBIAN=${{ matrix.debian-version }} update/arm
       - run: make DEBIAN=${{ matrix.debian-version }} build/arm-base
       - name: Log in to docker
@@ -89,7 +89,7 @@ jobs:
         - 22.04
         - 24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - run: make UBUNTU=${{ matrix.ubuntu-version }} update
       - run: make UBUNTU=${{ matrix.ubuntu-version }} build/minimal-cross
       - name: Log in to docker
@@ -152,7 +152,7 @@ jobs:
           ubuntu-version: 24.04
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
 
     - name: Download image
       uses: actions/download-artifact@v4
