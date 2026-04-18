@@ -1,9 +1,9 @@
 
-ARG UBUNTU=invalid-ubuntu
+ARG DEBIAN=invalid-debian
 ARG ARCH=invalid-arch
 ARG VERSION=invalid-version
 
-FROM wpilib/${ARCH}-cross-ubuntu-minimal:${VERSION}-${UBUNTU} AS pycompile
+FROM wpilib/${ARCH}-cross-debian-minimal:${DEBIAN} AS pycompile
 
 ARG TARGET_HOST=invalid-target-host
 ARG AC_TARGET_HOST=invalid-ac-target-host
@@ -15,9 +15,9 @@ ENV EXTRA_CROSS_CONFIGURE_ARGS=${EXTRA_CROSS_CONFIGURE_ARGS}
 ENV BUILD_HOST="x86_64"
 ENV WORKING_DIRECTORY="/build"
 ENV INSTALL_DIRECTORY="/build/crosspy"
-ENV PYTHON_VERSION="3.13.5"
-ENV PYTHON_FTP_VERSION="3.13.5"
-ENV PYTHON_EXE="python3.13"
+ENV PYTHON_VERSION="3.14.2"
+ENV PYTHON_FTP_VERSION="3.14.2"
+ENV PYTHON_EXE="python3.14"
 ENV SOURCE_DIRECTORY="Python-$PYTHON_VERSION"
 ENV PYTHON_ARCHIVE="Python-$PYTHON_VERSION.tar.xz"
 ENV PREFIX="$INSTALL_DIRECTORY"
@@ -29,7 +29,7 @@ ENV PREFIX="$INSTALL_DIRECTORY"
 RUN set -xe; \
     apt-get update; \
     apt-get install -y build-essential checkinstall g++ libreadline-dev libncurses-dev libssl-dev \
-        libsqlite3-dev tk-dev libgdbm-dev libc6-dev libbz2-dev liblzma-dev lzma-dev libffi-dev zlib1g-dev; \
+        libsqlite3-dev tk-dev libgdbm-dev libc6-dev libbz2-dev liblzma-dev libffi-dev zlib1g-dev; \
     # cleanup
     rm -rf /var/lib/apt/lists/*
 
@@ -54,7 +54,7 @@ RUN set -xe; \
 RUN set -xe; \
     # Remove build dependencies -- compilation uses host for some reason
     apt-get remove -y libreadline-dev libncursesw5-dev libssl-dev \
-        libsqlite3-dev tk-dev libgdbm-dev libc6-dev libbz2-dev liblzma-dev lzma-dev libffi-dev zlib1g-dev; \
+        libsqlite3-dev tk-dev libgdbm-dev libc6-dev libbz2-dev liblzma-dev libffi-dev zlib1g-dev; \
     apt-get autoremove -y;
 
 RUN set -xe; \
@@ -81,7 +81,7 @@ RUN set -xe; \
 # Minimal cross-compilation environment
 #
 
-FROM wpilib/${ARCH}-cross-ubuntu-minimal:${VERSION}-${UBUNTU} AS crossenv
+FROM wpilib/${ARCH}-cross-debian-minimal:${DEBIAN} AS crossenv
 
 RUN set -xe; \
     apt-get update; \
@@ -100,8 +100,8 @@ ARG EXTRA_CROSSENV_ARGS=
 
 RUN set -xe; \
     ldconfig; \
-    python3.13 -m pip install 'crossenv~=1.6.1'; \
-    python3.13 -m crossenv /build/crosspy/bin/python3.13 /build/venv ${MACHINE_ARG} --sysroot=$(${TARGET_HOST}-gcc -print-sysroot) --env UNIXCONFDIR=/build/venv/cross/etc ${EXTRA_CROSSENV_ARGS}; \
+    python3.14 -m pip install 'crossenv~=1.6.1'; \
+    python3.14 -m crossenv /build/crosspy/bin/python3.14 /build/venv ${MACHINE_ARG} --sysroot=$(${TARGET_HOST}-gcc -print-sysroot) --env UNIXCONFDIR=/build/venv/cross/etc ${EXTRA_CROSSENV_ARGS}; \
     /build/venv/bin/cross-pip install wheel;
 
 COPY pip-${ARCH}.conf /build/venv/cross/pip.conf
