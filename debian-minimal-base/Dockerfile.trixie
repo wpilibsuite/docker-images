@@ -1,5 +1,4 @@
-ARG UBUNTU=24.04
-FROM ubuntu:${UBUNTU}
+FROM debian:trixie
 
 RUN set -xe; \
     apt-get update; \

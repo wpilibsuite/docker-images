@@ -1,6 +1,5 @@
-UBUNTU?=22.04
 OPENSDK_UBUNTU?=20.04
-DEBIAN?=bookworm
+DEBIAN?=trixie
 
 DS?=trixie
 
@@ -13,7 +12,7 @@ usage:
 	@echo "Run make update, make build, and make push"
 
 update:
-	docker pull docker.io/ubuntu:${UBUNTU}
+	docker pull docker.io/debian:${DEBIAN}
 	docker pull docker.io/ubuntu:${OPENSDK_UBUNTU}
 
 update/arm:
@@ -26,34 +25,24 @@ build/arm-base:
 		docker build -t ${DOCKER_USER}/debian-base:arm64-${DEBIAN} -f Dockerfile.${DEBIAN} .
 
 build/base:
-	cd ubuntu-base && \
-		docker build -t ${DOCKER_USER}/ubuntu-base:${UBUNTU} -f Dockerfile.${UBUNTU} .
+	cd debian-base && \
+		docker build -t ${DOCKER_USER}/debian-base:${DEBIAN} -f Dockerfile.${DEBIAN} .
 
 build/cross: build/base
-	cd roborio-cross-ubuntu && \
-	    docker build -t ${DOCKER_USER}/roborio-cross-ubuntu:2025-${UBUNTU} -f Dockerfile.2025 --build-arg UBUNTU=${UBUNTU} --build-arg TYPE=base .
-	cd systemcore-cross-ubuntu && \
-	    docker build -t ${DOCKER_USER}/systemcore-cross-ubuntu:2027-${UBUNTU} -f Dockerfile.2027 --build-arg UBUNTU=${UBUNTU} --build-arg TYPE=base .
-	cd raspbian-cross-ubuntu && \
-	    docker build -t ${DOCKER_USER}/raspbian-cross-ubuntu:bookworm-${UBUNTU} -f Dockerfile.bookworm-2025 --build-arg UBUNTU=${UBUNTU} --build-arg TYPE=base . && \
-	    docker build -t ${DOCKER_USER}/raspbian-cross-ubuntu:2027-bookworm-${UBUNTU} -f Dockerfile.bookworm-2027 --build-arg UBUNTU=${UBUNTU} --build-arg TYPE=base .
-	cd aarch64-cross-ubuntu && \
-	    docker build -t ${DOCKER_USER}/aarch64-cross-ubuntu:bookworm-${UBUNTU} -f Dockerfile.bookworm-2025 --build-arg UBUNTU=${UBUNTU} --build-arg TYPE=base . && \
-	    docker build -t ${DOCKER_USER}/aarch64-cross-ubuntu:2027-bookworm-${UBUNTU} -f Dockerfile.bookworm-2027 --build-arg UBUNTU=${UBUNTU} --build-arg TYPE=base .
+	cd systemcore-cross-debian && \
+	    docker build -t ${DOCKER_USER}/systemcore-cross-debian:${DEBIAN} -f Dockerfile.${DEBIAN} --build-arg DEBIAN=${DEBIAN} --build-arg TYPE=base .
+	cd aarch64-cross-debian && \
+	    docker build -t ${DOCKER_USER}/aarch64-cross-debian:${DEBIAN} -f Dockerfile.${DEBIAN} --build-arg DEBIAN=${DEBIAN} --build-arg TYPE=base .
 
 build/minimal-base:
-	cd ubuntu-minimal-base && \
-		docker build -t ${DOCKER_USER}/ubuntu-minimal-base:${UBUNTU} -f Dockerfile.${UBUNTU} .
+	cd debian-minimal-base && \
+		docker build -t ${DOCKER_USER}/debian-minimal-base:${DEBIAN} -f Dockerfile.${DEBIAN} .
 
 build/minimal-cross: build/minimal-base
-	cd roborio-cross-ubuntu && \
-	    docker build -t ${DOCKER_USER}/roborio-cross-ubuntu-minimal:2025-${UBUNTU} -f Dockerfile.2025 --build-arg UBUNTU=${UBUNTU} --build-arg TYPE=minimal-base .
-	cd systemcore-cross-ubuntu && \
-	    docker build -t ${DOCKER_USER}/systemcore-cross-ubuntu-minimal:2027-${UBUNTU} -f Dockerfile.2027 --build-arg UBUNTU=${UBUNTU} --build-arg TYPE=minimal-base .
-	cd raspbian-cross-ubuntu && \
-	    docker build -t ${DOCKER_USER}/raspbian-cross-ubuntu-minimal:bookworm-${UBUNTU} -f Dockerfile.bookworm-2025 --build-arg UBUNTU=${UBUNTU} --build-arg TYPE=minimal-base .
-	cd aarch64-cross-ubuntu && \
-	    docker build -t ${DOCKER_USER}/aarch64-cross-ubuntu-minimal:bookworm-${UBUNTU} -f Dockerfile.bookworm-2025 --build-arg UBUNTU=${UBUNTU} --build-arg TYPE=minimal-base .
+	cd systemcore-cross-debian && \
+	    docker build -t ${DOCKER_USER}/systemcore-cross-debian-minimal:${DEBIAN} -f Dockerfile.${DEBIAN} --build-arg DEBIAN=${DEBIAN} --build-arg TYPE=minimal-base .
+	cd aarch64-cross-debian && \
+	    docker build -t ${DOCKER_USER}/aarch64-cross-debian-minimal:${DEBIAN} -f Dockerfile.${DEBIAN} --build-arg DEBIAN=${DEBIAN} --build-arg TYPE=minimal-base .
 
 build/opensdk:
 	cd opensdk/ubuntu && \
@@ -65,24 +54,18 @@ push/arm-base:
 	docker push ${DOCKER_USER}/debian-base:arm64-${DEBIAN}
 
 push/base:
-	docker push ${DOCKER_USER}/ubuntu-base:${UBUNTU}
+	docker push ${DOCKER_USER}/debian-base:${DEBIAN}
 
 push/cross: push/base
-	docker push ${DOCKER_USER}/roborio-cross-ubuntu:2025-${UBUNTU}
-	docker push ${DOCKER_USER}/systemcore-cross-ubuntu:2027-${UBUNTU}
-	docker push ${DOCKER_USER}/raspbian-cross-ubuntu:bookworm-${UBUNTU}
-	docker push ${DOCKER_USER}/aarch64-cross-ubuntu:bookworm-${UBUNTU}
-	docker push ${DOCKER_USER}/raspbian-cross-ubuntu:2027-bookworm-${UBUNTU}
-	docker push ${DOCKER_USER}/aarch64-cross-ubuntu:2027-bookworm-${UBUNTU}
+	docker push ${DOCKER_USER}/systemcore-cross-debian:${DEBIAN}
+	docker push ${DOCKER_USER}/aarch64-cross-debian:${DEBIAN}
 
 push/minimal-base:
-	docker push ${DOCKER_USER}/ubuntu-minimal-base:${UBUNTU}
+	docker push ${DOCKER_USER}/debian-minimal-base:${DEBIAN}
 
 push/minimal-cross: push/minimal-base
-	docker push ${DOCKER_USER}/roborio-cross-ubuntu-minimal:2025-${UBUNTU}
-	docker push ${DOCKER_USER}/systemcore-cross-ubuntu-minimal:2027-${UBUNTU}
-	docker push ${DOCKER_USER}/raspbian-cross-ubuntu-minimal:bookworm-${UBUNTU}
-	docker push ${DOCKER_USER}/aarch64-cross-ubuntu-minimal:bookworm-${UBUNTU}
+	docker push ${DOCKER_USER}/systemcore-cross-debian-minimal:${DEBIAN}
+	docker push ${DOCKER_USER}/aarch64-cross-debian-minimal:${DEBIAN}
 
 push/opensdk:
 	docker push ${DOCKER_USER}/opensdk-ubuntu:${OPENSDK_UBUNTU}
@@ -90,11 +73,9 @@ push/opensdk:
 
 .PHONY: save/minimal-cross
 save/minimal-cross:
-	docker save ${DOCKER_USER}/roborio-cross-ubuntu-minimal:2025-${UBUNTU} | zstd > roborio.tar.zst
-	docker save ${DOCKER_USER}/systemcore-cross-ubuntu-minimal:2027-${UBUNTU} | zstd > systemcore.tar.zst
-	docker save ${DOCKER_USER}/raspbian-cross-ubuntu-minimal:bookworm-${UBUNTU} | zstd > raspbian.tar.zst
+	docker save ${DOCKER_USER}/systemcore-cross-debian-minimal:${DEBIAN} | zstd > systemcore.tar.zst
 
-include cross-ubuntu-py/py.mk
+include cross-debian-py/py.mk
 
 update/ds:
 	docker pull docker.io/debian:${DS}

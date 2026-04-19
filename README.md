@@ -3,47 +3,42 @@ Docker images for building WPILib
 
 These are the dockerfiles for the wpilib dockerhub repositories.
 
-ubuntu-base
- - Based on official ubuntu repo (host)
+debian-base
+ - Based on official debian repo (host)
  - Contains Java and C++ native tools required for WPILib development
  - Base image for cross-compiler images
- - Published as wpilib/ubuntu-base:host ubuntu version (e.g. 18.04)
+ - Published as wpilib/debian-base:host debian codename (e.g. trixie)
 
-ubuntu-minimal-base
- - Based on official ubuntu repo (host)
+debian-minimal-base
+ - Based on official debian repo (host)
  - Base image for minimal cross-compiler images that only contain cross compiler
- - Published as wpilib/ubuntu-minimal-base:host ubuntu version (e.g. 18.04)
+ - Published as wpilib/debian-minimal-base:host debian codename (e.g. trixie)
 
-roborio-cross-ubuntu
- - Based on wpilib/ubuntu-base
- - Cross-compiler for roboRIO
- - Published as wpilib/roborio-cross-ubuntu:frc season-host ubuntu version
-   (e.g. 2020-18.04)
- - Minimal variant published as roborio-cross-ubuntu-minimal
+driverstation-base
+ - Based on official debian repo (host)
+ - Base image for building the Driver Station application
+ - Published as wpilib/driverstation-base:arch (e.g. x64 or arm64)
 
-systemcore-cross-ubuntu
- - Based on wpilib/ubuntu-base
- - Cross-compiler for systemcore (Bookworm for now)
- - Published as wpilib/systemcore-cross-ubuntu:frc season-host ubuntu version
-   (e.g. 2020-18.04)
- - Minimal variant published as systemcore-cross-ubuntu-minimal
+opensdk-ubuntu
+ - Based on official ubuntu repo (host)
+ - Base image for building opensdk toolchains
+ - Published as wpilib/opensdk-ubuntu:host ubuntu version (e.g. 24.04)
 
-raspbian-cross-ubuntu
- - Based on wpilib/ubuntu-base
- - Cross-compiler for Raspbian
- - Published as wpilib/raspbian-cross-ubuntu:target version-host ubuntu version
-   (e.g. 10-18.04)
- - Minimal variant published as raspbian-cross-ubuntu-minimal
+systemcore-cross-debian
+ - Based on wpilib/debian-base
+ - Cross-compiler for systemcore (Trixie for now)
+ - Published as wpilib/systemcore-cross-debian:host debian codename
+   (e.g. trixie)
+ - Minimal variant published as wpilib/systemcore-cross-debian-minimal
 
-aarch64-cross-ubuntu
- - Based on wpilib/ubuntu-base
+aarch64-cross-debian
+ - Based on wpilib/debian-base
  - Cross-compiler for aarch64 (TX2 and Nano)
- - Published as wpilib/aarch-cross-ubuntu:target version-host ubuntu version
-   (e.g. bionic-18.04)
- - Minimal variant published as raspbian-cross-ubuntu-aarch64
+ - Published as wpilib/aarch-cross-debian:host debian codename
+   (e.g. trixie)
+ - Minimal variant published as wpilib/aarch64-cross-debian-minimal
 
-roborio-cross-ubuntu-pyXXX
-raspbian-cross-ubuntu-pyXXX
+systemcore-cross-debian-pyXXX
 - Based on the minimal cross compiler image
 - Contains crossenv at /build/venv for cross-compiling python wheels
-- Published as wpilib/{type}-cross-ubuntu:{version}-{ubuntu}-py{pyversion}
+- Published as wpilib/systemcore-cross-debian:{debian}-py{pyversion}
