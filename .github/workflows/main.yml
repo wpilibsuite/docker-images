@@ -10,22 +10,17 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        ubuntu-version:
-        - 22.04
-        - 24.04
     steps:
       - uses: actions/checkout@v4
-      - run: make UBUNTU=${{ matrix.ubuntu-version }} update
-      - run: make UBUNTU=${{ matrix.ubuntu-version }} build
+      - run: make DEBIAN=trixie update
+      - run: make DEBIAN=trixie build
       - name: Log in to docker
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
         if: ${{ github.repository_owner == 'wpilibsuite' && github.ref == 'refs/heads/main' }}
-      - run: make UBUNTU=${{ matrix.ubuntu-version }} push
+      - run: make DEBIAN=trixie push
         if: ${{ github.repository_owner == 'wpilibsuite' && github.ref == 'refs/heads/main' }}
 
   build-ds:
@@ -66,7 +61,7 @@ jobs:
     strategy:
       matrix:
         debian-version:
-        - bookworm
+        - trixie
     steps:
       - uses: actions/checkout@v4
       - run: make DEBIAN=${{ matrix.debian-version }} update/arm
@@ -77,47 +72,30 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
         if: ${{ github.repository_owner == 'wpilibsuite' && github.ref == 'refs/heads/main' }}
-      - run: make UBUNTU=${{ matrix.debian-version }} push/arm-base
+      - run: make DEBIAN=${{ matrix.debian-version }} push/arm-base
         if: ${{ github.repository_owner == 'wpilibsuite' && github.ref == 'refs/heads/main' }}
 
   build-minimal:
     name: Build Minimal
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        ubuntu-version:
-        - 22.04
-        - 24.04
     steps:
       - uses: actions/checkout@v4
-      - run: make UBUNTU=${{ matrix.ubuntu-version }} update
-      - run: make UBUNTU=${{ matrix.ubuntu-version }} build/minimal-cross
+      - run: make DEBIAN=trixie update
+      - run: make DEBIAN=trixie build/minimal-cross
       - name: Log in to docker
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
         if: ${{ github.repository_owner == 'wpilibsuite' && github.ref == 'refs/heads/main' }}
-      - run: make UBUNTU=${{ matrix.ubuntu-version }} push/minimal-cross
+      - run: make DEBIAN=trixie push/minimal-cross
         if: ${{ github.repository_owner == 'wpilibsuite' && github.ref == 'refs/heads/main' }}
 
-      - run: make UBUNTU=${{ matrix.ubuntu-version }} save/minimal-cross
-      - name: Upload roborio cross base image
-        uses: actions/upload-artifact@v4
-        with:
-          name: roborio-${{ matrix.ubuntu-version }}
-          path: roborio.tar.zst
-          retention-days: 1
-      - name: Upload raspbian cross base image
-        uses: actions/upload-artifact@v4
-        with:
-          name: raspbian-${{ matrix.ubuntu-version }}
-          path: raspbian.tar.zst
-          retention-days: 1
+      - run: make DEBIAN=trixie save/minimal-cross
       - name: Upload systemcore cross base image
         uses: actions/upload-artifact@v4
         with:
-          name: systemcore-${{ matrix.ubuntu-version }}
+          name: systemcore-trixie
           path: systemcore.tar.zst
           retention-days: 1
 
@@ -128,28 +106,12 @@ jobs:
     strategy:
       matrix:
         type:
-        - raspbian
+        - systemcore
         pyversion:
-        - py311
-        - py312
         - py313
         - py314
-        ubuntu-version:
-        - 22.04
-        - 24.04
-        include:
-        - type: roborio
-          pyversion: py313
-          ubuntu-version: 22.04
-        - type: roborio
-          pyversion: py314
-          ubuntu-version: 22.04
-        - type: systemcore
-          pyversion: py313
-          ubuntu-version: 24.04
-        - type: systemcore
-          pyversion: py314
-          ubuntu-version: 24.04
+        debian-version:
+        - trixie
 
     steps:
     - uses: actions/checkout@v4
@@ -157,7 +119,7 @@ jobs:
     - name: Download image
       uses: actions/download-artifact@v4
       with:
-        name: ${{ matrix.type }}-${{ matrix.ubuntu-version }}
+        name: ${{ matrix.type }}-${{ matrix.debian-version }}
         path: img
 
     - name: Load image
@@ -166,7 +128,7 @@ jobs:
         rm img/${{ matrix.type }}.tar.zst
 
     - name: Build image
-      run: make UBUNTU=${{ matrix.ubuntu-version }} build/cross-${{ matrix.type }}-${{ matrix.pyversion }}
+      run: make DEBIAN=trixie build/cross-${{ matrix.type }}-${{ matrix.pyversion }}
     - name: Log in to docker
       uses: docker/login-action@v3
       with:
@@ -174,5 +136,5 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
       if: ${{ github.repository_owner == 'wpilibsuite' && github.ref == 'refs/heads/main' }}
     - name: Upload image
-      run: make UBUNTU=${{ matrix.ubuntu-version }} push/cross-${{ matrix.type }}-${{ matrix.pyversion }}
+      run: make DEBIAN=trixie push/cross-${{ matrix.type }}-${{ matrix.pyversion }}
       if: ${{ github.repository_owner == 'wpilibsuite' && github.ref == 'refs/heads/main' }}
