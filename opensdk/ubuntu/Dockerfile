@@ -1,4 +1,4 @@
-ARG OPENSDK_UBUNTU=20.04
+ARG OPENSDK_UBUNTU=22.04
 FROM ubuntu:${OPENSDK_UBUNTU}
 
 ENV TZ=UTC
@@ -7,9 +7,9 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && \
     apt-get install -y tzdata && \
     apt-get install -y \
+    binutils-aarch64-linux-gnu \
     bison \
     crossbuild-essential-amd64 \
-    crossbuild-essential-riscv64 \
     flex \
     gawk \
     libgmp-dev \
