@@ -26,5 +26,6 @@ RUN apt-get update && \
     sudo \
     texinfo \
     wget \
-    zip && \
+    zip \
+    zstd && \
   rm -rf /var/lib/apt/lists/*
