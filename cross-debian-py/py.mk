@@ -5,8 +5,8 @@ DOCKER_USER?=wpilib
 
 TYPE_SYSTEMCORE=systemcore
 VERSION_SYSTEMCORE=2027
-TARGET_HOST_SYSTEMCORE=aarch64-bookworm-linux-gnu
-AC_TARGET_HOST_SYSTEMCORE=aarch64-bookworm-linux-gnu
+TARGET_HOST_SYSTEMCORE=aarch64-systemcore2027-linux-gnu
+AC_TARGET_HOST_SYSTEMCORE=aarch64-systemcore2027-linux-gnu
 
 
 .PHONY: build/cross-python

@@ -3,6 +3,6 @@ ARG TYPE=base
 FROM wpilib/debian-${TYPE}:${DEBIAN}
 
 # Install toolchain
-RUN curl -SL https://github.com/wpilibsuite/opensdk/releases/download/v2025-2/arm64-bookworm-2025-x86_64-linux-gnu-Toolchain-12.2.0.tgz | sh -c 'mkdir -p /usr/local && cd /usr/local && tar xzf - --strip-components=2'
+RUN curl -SL https://github.com/wpilibsuite/opensdk/releases/download/v2027-1/arm64-trixie-2027-x86_64-linux-gnu-Toolchain-14.3.0.tgz | sh -c 'mkdir -p /usr/local && cd /usr/local && tar xzf - --strip-components=2'
 
 WORKDIR /
