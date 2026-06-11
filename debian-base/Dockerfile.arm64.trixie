@@ -1,6 +1,7 @@
 FROM debian:trixie
 
 RUN apt-get update && apt-get install -y apt-transport-https \
+    avahi-daemon \
     ca-certificates \
     gnupg \
     tzdata \
@@ -14,6 +15,7 @@ RUN apt-get update && apt-get install -y apt-transport-https \
     gdb \
     gfortran \
     git \
+    libavahi-client3 \
     libc6-dev \
     libgl1-mesa-dev \
     libglu1-mesa-dev \
