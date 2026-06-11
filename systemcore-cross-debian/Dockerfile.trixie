@@ -5,6 +5,4 @@ FROM wpilib/debian-${TYPE}:${VERSION}
 # Install toolchain
 RUN curl -SL https://github.com/wpilibsuite/opensdk/releases/download/v2027-1/arm64-systemcore-2027-x86_64-linux-gnu-Toolchain-14.3.0.tgz | sh -c 'mkdir -p /usr/local && cd /usr/local && tar xzf - --strip-components=2'
 
-RUN apt update && apt install -y avahi-daemon && rm -rf /var/lib/apt/lists/*
-
 WORKDIR /
