@@ -108,8 +108,8 @@ jobs:
         type:
         - systemcore
         pyversion:
-        - py313
         - py314
+        - py315
         debian-version:
         - trixie
 

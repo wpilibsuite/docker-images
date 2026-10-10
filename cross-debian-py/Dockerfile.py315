@@ -15,9 +15,9 @@ ENV EXTRA_CROSS_CONFIGURE_ARGS=${EXTRA_CROSS_CONFIGURE_ARGS}
 ENV BUILD_HOST="x86_64"
 ENV WORKING_DIRECTORY="/build"
 ENV INSTALL_DIRECTORY="/build/crosspy"
-ENV PYTHON_VERSION="3.13.5"
-ENV PYTHON_FTP_VERSION="3.13.5"
-ENV PYTHON_EXE="python3.13"
+ENV PYTHON_VERSION="3.15.0"
+ENV PYTHON_FTP_VERSION="3.15.0"
+ENV PYTHON_EXE="python3.15"
 ENV SOURCE_DIRECTORY="Python-$PYTHON_VERSION"
 ENV PYTHON_ARCHIVE="Python-$PYTHON_VERSION.tar.xz"
 ENV PREFIX="$INSTALL_DIRECTORY"
@@ -100,8 +100,8 @@ ARG EXTRA_CROSSENV_ARGS=
 
 RUN set -xe; \
     ldconfig; \
-    python3.13 -m pip install 'crossenv~=1.6.1'; \
-    python3.13 -m crossenv /build/crosspy/bin/python3.13 /build/venv ${MACHINE_ARG} --sysroot=$(${TARGET_HOST}-gcc -print-sysroot) --env UNIXCONFDIR=/build/venv/cross/etc ${EXTRA_CROSSENV_ARGS}; \
+    python3.15 -m pip install 'crossenv~=1.6.1'; \
+    python3.15 -m crossenv /build/crosspy/bin/python3.15 /build/venv ${MACHINE_ARG} --sysroot=$(${TARGET_HOST}-gcc -print-sysroot) --env UNIXCONFDIR=/build/venv/cross/etc ${EXTRA_CROSSENV_ARGS}; \
     /build/venv/bin/cross-pip install wheel;
 
 COPY pip-${ARCH}.conf /build/venv/cross/pip.conf
